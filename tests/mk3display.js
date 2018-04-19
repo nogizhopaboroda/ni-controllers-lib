@@ -66,15 +66,15 @@ function fillTransmitCommand(buf, numPixels, off=HEADER_LENGTH) {
   view.setUint8(0, 0);
 }
 
-function makeAndFillBuffer(width, height) {
+function makeAndFillBuffer(width, height, scaleX, scaleY) {
   const numPixels = width * height;
   const buf = new ArrayBuffer(numPixels * PIXEL_LENGTH);
 
   let x = 0, y = 0;
   const pixels = new Uint16Array(buf);
   for (let i = 0; i < numPixels; i++) {
-    let red = x % 32;
-    let green = y % 64;
+    let red = x * scaleX % 32;
+    let green = y * scaleY % 64;
     let blue = Math.floor(x / 32) % 32;
 
     const pix = rgb16(red, green, blue);
@@ -98,14 +98,14 @@ const PIXEL_LENGTH = 2;
  */
 async function paintDisplay(displayNum, pixelBuffer) {
   const width = EACH_WIDTH;
-  const height = 1; //EACH_HEIGHT;
+  const height = EACH_HEIGHT;
   const numPixels = width * height;
 
   const buf = new ArrayBuffer(
     HEADER_LENGTH + COMMAND_LENGTH * 3 + numPixels * PIXEL_LENGTH);
   const allData = new Uint8Array(buf);
 
-  for (let row = 0; row < EACH_HEIGHT; row++) {
+  for (let row = 0; row < EACH_HEIGHT; row += height) {
     fillHeader(buf, displayNum, 0, row, width, height);
     fillTransmitCommand(buf, numPixels);
     const dataStart = HEADER_LENGTH + COMMAND_LENGTH;
@@ -113,7 +113,7 @@ async function paintDisplay(displayNum, pixelBuffer) {
 
     const pixelRow = new Uint8Array(pixelBuffer,
                                     row * EACH_WIDTH * PIXEL_LENGTH,
-                                    EACH_WIDTH * PIXEL_LENGTH);
+                                    height * EACH_WIDTH * PIXEL_LENGTH);
     allData.set(pixelRow, dataStart);
     // the blit command
     allData[dataStop] = 0x03;
@@ -128,7 +128,8 @@ async function paintDisplay(displayNum, pixelBuffer) {
 }
 
 async function main() {
-  const pixels = makeAndFillBuffer(EACH_WIDTH, EACH_HEIGHT);
+  const pixels = makeAndFillBuffer(EACH_WIDTH, EACH_HEIGHT,
+                                   Math.random(), Math.random());
 
   console.log('painting display 0');
   let rval1 = await paintDisplay(0, pixels);
