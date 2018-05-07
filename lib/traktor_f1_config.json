@@ -3,6 +3,7 @@
   "productId": 4384,
   "name": "Traktor Kontrol F1",
 
+  "ledBrightestValue": 127,
   "input": {
     "firstByte": "0x01",
 

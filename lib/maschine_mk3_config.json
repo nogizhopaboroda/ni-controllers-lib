@@ -3,6 +3,8 @@
   "productId": 5632,
   "name": "Maschine mk3",
 
+  "ledBrightestValue": 63,
+
   "input": {
     "interface": 4,
     "endpoint": "0x83",
@@ -91,7 +93,7 @@
       "knobTouch4": { "addr": 10, "bitmask": "0x10" },
       "knobTouch3": { "addr": 10, "bitmask": "0x20" },
       "knobTouch2": { "addr": 10, "bitmask": "0x40" },
-      "knobTouch1": { "addr": 10, "bitmask": "0x80" },
+      "knobTouch1": { "addr": 10, "bitmask": "0x80" }
     },
 
     "knobs": {
@@ -106,8 +108,8 @@
 
       "micInGain": { "msb": 37, "lsb": 36 },
       "headphoneVolume": { "msb": 39, "lsb": 38 },
-      "masterVolume": { "msb": 41, "lsb": 40 },
-    },
+      "masterVolume": { "msb": 41, "lsb": 40 }
+    }
   },
 
   "input2": {
@@ -115,21 +117,19 @@
     "endpoint": "0x83",
     "firstByte": "0x02",
 
-    "packetized": {
+    "packetized_pads": {
       "start": "0x01",
       "repeated": 21,
       "length": 3,
-      "bytes": [
-        { "what": "index", "prefix": "p" },
-        { "what": "extra", "name": "extra1" },
-        { "what": "extra", "name": "extra2" }
-      ]
+      "padCount": 16,
+      "prefix": "p"
     }
   },
 
   "output": {
+    "length": 63,
     "firstByte": "0x80",
-    "brightness_leds": {
+    "leds": {
       "channelMidi": { "addr": 1 },
       "pluginInstance": { "addr": 2 },
       "arranger": { "addr": 3 },
@@ -179,7 +179,7 @@
       "duplicateDouble": { "addr": 55 },
       "select": { "addr": 56 },
       "solo": { "addr": 57 },
-      "muteChoke": { "addr": 58 },
+      "muteChoke": { "addr": 58 }
     },
 
     "indexed_leds": {
@@ -197,11 +197,12 @@
       "navUp": { "addr": 59 },
       "navLeft": { "addr": 60 },
       "navRight": { "addr": 61 },
-      "navDown": { "addr": 62 },
+      "navDown": { "addr": 62 }
     }
   },
 
   "output2": {
+    "length": 42,
     "firstByte": "0x81",
     "indexed_leds": {
       "ts1": { "addr": 1 },
@@ -245,7 +246,7 @@
       "p13": { "addr": 38 },
       "p14": { "addr": 39 },
       "p15": { "addr": 40 },
-      "p16": { "addr": 41 },
-    },
+      "p16": { "addr": 41 }
+    }
   }
 }
