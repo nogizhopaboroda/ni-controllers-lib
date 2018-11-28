@@ -30,3 +30,13 @@ for (let i = 1; i <= 16; i++) {
     led.setColorByNumberHelper(li0, pressure > 2048, (pressure % 2048) > 1024);
   });
 }
+
+
+
+// ## Knobs: On touch, override the pads and do RGB/spread for each
+for (let i = 1; i <= 8; i++) {
+  const
+  mk3.on(`knobTouch${i}`, (touched) => {
+
+  });
+}
