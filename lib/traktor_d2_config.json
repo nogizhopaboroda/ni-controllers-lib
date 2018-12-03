@@ -1,0 +1,275 @@
+{
+  "vendorId": 6092,
+  "productId": 5120,
+  "name": "Traktor Kontrol D2",
+
+  "ledBrightestValue": 127,
+  "input": {
+    "interface": 0,
+    "endpoint": "0x81",
+    "firstByte": "0x01",
+
+    "buttons": {
+      "d1": { "addr": 2, "bitmask": "0x80" },
+      "d2": { "addr": 3, "bitmask": "0x04" },
+      "d3": { "addr": 3, "bitmask": "0x02" },
+      "d4": { "addr": 3, "bitmask": "0x01" },
+
+      "A": { "addr": 5, "bitmask": "0x01" },
+      "B": { "addr": 3, "bitmask": "0x02" },
+      "C": { "addr": 3, "bitmask": "0x04" },
+      "D": { "addr": 3, "bitmask": "0x08" },
+      "fxSelect": { "addr": 2, "bitmask": "0x40"},
+
+      "knobTouch1": { "addr": 9, "bitmask": "0x40" },
+      "knobTouch2": { "addr": 9, "bitmask": "0x80" },
+      "knobTouch3": { "addr": 10, "bitmask": "0x10" },
+      "knobTouch4": { "addr": 10, "bitmask": "0x20" },
+      "knobTouch5": { "addr": 9, "bitmask": "0x02" },
+      "knobTouch6": { "addr": 9, "bitmask": "0x04" },
+      "knobTouch7": { "addr": 9, "bitmask": "0x08" },
+      "knobTouch8": { "addr": 9, "bitmask": "0x10" },
+
+      "dl1": { "addr": 2, "bitmask": "0x20" },
+      "dl2": { "addr": 2, "bitmask": "0x10" },
+      "dl3": { "addr": 2, "bitmask": "0x01" },
+      "dl4": { "addr": 4, "bitmask": "0x40" },
+
+      "dr1": { "addr": 3, "bitmask": "0x08" },
+      "dr2": { "addr": 3, "bitmask": "0x10" },
+      "dr3": { "addr": 3, "bitmask": "0x20" },
+      "dr4": { "addr": 3, "bitmask": "0x40" },
+
+      "d5": { "addr": 4, "bitmask": "0x10" },
+      "d6": { "addr": 4, "bitmask": "0x08" },
+      "d7": { "addr": 4, "bitmask": "0x04" },
+      "d8": { "addr": 4, "bitmask": "0x02" },
+
+      "sliderTouch1" : { "addr": 10, "bitmask": "0x01" },
+      "sliderTouch2" : { "addr": 10, "bitmask": "0x02" },
+      "sliderTouch4" : { "addr": 10, "bitmask": "0x04" },
+      "sliderTouch8" : { "addr": 10, "bitmask": "0x08" },
+
+      "stepperTouch1": { "addr": 9, "bitmask": "0x20" },
+      "stepperTouch2": { "addr": 9, "bitmask": "0x01" },
+
+      "back": { "addr": 4, "bitmask": "0x80" },
+      "capture": { "addr": 4, "bitmask": "0x20" },
+      "edit": { "addr": 4, "bitmask": "0x01" },
+
+      "p1": { "addr": 7, "bitmask": "0x08" },
+      "p2": { "addr": 7, "bitmask": "0x01" },
+      "p3": { "addr": 6, "bitmask": "0x01" },
+      "p4": { "addr": 6, "bitmask": "0x02" },
+      "p5": { "addr": 7, "bitmask": "0x20" },
+      "p6": { "addr": 7, "bitmask": "0x40" },
+      "p7": { "addr": 7, "bitmask": "0x80" },
+      "p8": { "addr": 7, "bitmask": "0x02" },
+
+      "hotcue": { "addr": 4, "bitmask": "0x08" },
+      "loop": { "addr": 4, "bitmask": "0x04" },
+      "freeze": { "addr": 4, "bitmask": "0x02" },
+      "remix": { "addr": 3, "bitmask": "0x80" },
+
+      "shift": { "addr": 8, "bitmask": "0x80" },
+      "sync": { "addr": 8, "bitmask": "0x40" },
+      "cue": { "addr": 8, "bitmask": "0x20" },
+      "play": { "addr": 8, "bitmask": "0x10" },
+
+      "flux": { "addr": 7, "bitmask": "0x10" },
+      "deck": { "addr": 7, "bitmask": "0x04" }
+    },
+
+    "steppers": {
+      "stepper1": { "addr": 1, "nibble": "upper" },
+      "stepper2": { "addr": 1, "nibble": "lower" }
+    }
+  },
+
+  "input2": {
+    "interface": 0,
+    "endpoint": "0x81",
+    "firstByte": "0x02",
+
+    "knobs": {
+      "k1": { "msb": 18, "lsb": 17 },
+      "k2": { "msb": 20, "lsb": 19 },
+      "k3": { "msb": 22, "lsb": 21 },
+      "k4": { "msb": 24, "lsb": 23 },
+      "k5": { "msb": 2, "lsb": 1 },
+      "k6": { "msb": 4, "lsb": 3 },
+      "k7": { "msb": 6, "lsb": 5 },
+      "k8": { "msb": 8, "lsb": 7 }
+    },
+
+    "sliders": {
+      "s1": { "msb": 10, "lsb": 9 },
+      "s2": { "msb": 12, "lsb": 11 },
+      "s3": { "msb": 14, "lsb": 13 },
+      "s4": { "msb": 16, "lsb": 15 }
+    }
+  },
+
+  "output": {
+    "interface": 0,
+    "endpoint": "0x01",
+    "length": 123,
+    "firstByte": "0x80",
+
+    "leds": {
+      "fxSelect": { "addr":25 },
+
+      "d1": { "addr": 26 },
+      "d2": { "addr": 27 },
+      "d3": { "addr": 28 },
+      "d4": { "addr": 29 },
+
+      "dl1": { "addr": 30 },
+      "dl2": { "addr": 31 },
+      "dl3": { "addr": 32 },
+      "dl4": { "addr": 33 },
+
+      "dr1": { "addr": 34 },
+      "dr2": { "addr": 35 },
+      "dr3": { "addr": 36 },
+      "dr4": { "addr": 37 },
+
+      "back": { "addr": 38 },
+      "capture": { "addr":39 },
+      "edit": { "addr": 40 },
+
+      "d5": { "addr": 41 },
+      "d6": { "addr": 42 },
+      "d7": { "addr": 43 },
+      "d8": { "addr": 44 },
+
+      "hotcueWhite": { "addr": 45 },
+      "hotcueBlue": { "addr": 46 },
+      "loopWhite": { "addr": 47 },
+      "loopBlue": { "addr": 48 },
+      "freezeWhite": { "addr": 49 },
+      "freezeBlue": { "addr": 50 },
+      "remixWhite": { "addr": 51 },
+      "remixBlue": { "addr": 52 },
+
+      "flux": { "addr": 53 },
+
+      "deckWhite": { "addr": 54 },
+      "deckBlue": { "addr": 55 },
+
+      "shift": { "addr": 56 },
+
+      "syncGreen": { "addr": 57 },
+      "syncRed": { "addr": 58 },
+
+      "cue": { "addr": 59 },
+      "play": { "addr": 60 },
+
+      "stepper2UpWhite": { "addr": 61 },
+      "stepper2RightWhite": { "addr": 62 },
+      "stepper2DownWhite": { "addr": 63 },
+      "stepper2LeftWhite": { "addr": 64 },
+
+      "stepper2UpBlue": { "addr": 65 },
+      "stepper2RightBlue": { "addr": 66 },
+      "stepper2DownBlue": { "addr": 67 },
+      "stepper2LeftBlue": { "addr": 68 },
+
+      "tsb1": { "addr": 69 },
+      "tsb2": { "addr": 70 },
+      "tsb3": { "addr": 71 },
+      "tsb4": { "addr": 72 },
+      "tsb5": { "addr": 73 },
+      "tsb6": { "addr": 74 },
+      "tsb7": { "addr": 75 },
+      "tsb8": { "addr": 76 },
+      "tsb9": { "addr": 77 },
+      "tsb10": { "addr": 78 },
+      "tsb11": { "addr": 79 },
+      "tsb12": { "addr": 80 },
+      "tsb13": { "addr": 81 },
+      "tsb14": { "addr": 82 },
+      "tsb15": { "addr": 83 },
+      "tsb16": { "addr": 84 },
+      "tsb17": { "addr": 85 },
+      "tsb18": { "addr": 86 },
+      "tsb19": { "addr": 87 },
+      "tsb20": { "addr": 88 },
+      "tsb21": { "addr": 89 },
+      "tsb22": { "addr": 90 },
+      "tsb23": { "addr": 91 },
+      "tsb24": { "addr": 92 },
+      "tsb25": { "addr": 93 },
+
+      "tso1": { "addr": 94 },
+      "tso2": { "addr": 95 },
+      "tso3": { "addr": 96 },
+      "tso4": { "addr": 97 },
+      "tso5": { "addr": 98 },
+      "tso6": { "addr": 99 },
+      "tso7": { "addr": 100 },
+      "tso8": { "addr": 101 },
+      "tso9": { "addr": 102 },
+      "tso10": { "addr": 103 },
+      "tso11": { "addr": 104 },
+      "tso12": { "addr": 105 },
+      "tso13": { "addr": 106 },
+      "tso14": { "addr": 107 },
+      "tso15": { "addr": 108 },
+      "tso16": { "addr": 109 },
+      "tso17": { "addr": 110 },
+      "tso18": { "addr": 111 },
+      "tso19": { "addr": 112 },
+      "tso20": { "addr": 113 },
+      "tso21": { "addr": 114 },
+      "tso22": { "addr": 115 },
+      "tso23": { "addr": 116 },
+      "tso24": { "addr": 117 },
+      "tso25": { "addr": 118 },
+
+      "A": { "addr": 119 },
+      "B": { "addr": 120 },
+      "C": { "addr": 121 },
+      "D": { "addr": 122 }
+    },
+
+    "rgb_leds": {
+      "p1": { "rAddr": 1, "gAddr": 2, "bAddr": 3},
+      "p2": { "rAddr": 4, "gAddr": 5, "bAddr": 6},
+      "p3": { "rAddr": 7, "gAddr": 8, "bAddr": 9},
+      "p4": { "rAddr":10, "gAddr":11, "bAddr":12},
+      "p5": { "rAddr":13, "gAddr":14, "bAddr":15},
+      "p6": { "rAddr":16, "gAddr":17, "bAddr":18},
+      "p7": { "rAddr":19, "gAddr":20, "bAddr":21},
+      "p8": { "rAddr":22, "gAddr":23, "bAddr":24},
+    },
+
+    "lcd": {
+      "r": {
+        "a":5,
+        "b":4,
+        "c":3,
+        "d":8,
+        "e":7,
+        "f":6,
+        "g":2,
+        "dp":1
+      },
+      "l": {
+        "a":13,
+        "b":12,
+        "c":11,
+        "d":16,
+        "e":15,
+        "f":14,
+        "g":10,
+        "dp":9
+      }
+    }
+  },
+
+  "display": {
+    "interface": 1,
+    "endpoint": "0x02"
+  }
+}
