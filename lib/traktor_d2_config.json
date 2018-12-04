@@ -53,6 +53,9 @@
       "stepperTouch1": { "addr": 9, "bitmask": "0x20" },
       "stepperTouch2": { "addr": 9, "bitmask": "0x01" },
 
+      "stepperPush1": { "addr": 2, "bitmask": "0x08" },
+      "stepperPush2": { "addr": 9, "bitmask": "0x10 "},
+
       "back": { "addr": 4, "bitmask": "0x80" },
       "capture": { "addr": 4, "bitmask": "0x20" },
       "edit": { "addr": 4, "bitmask": "0x01" },
