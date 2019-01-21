@@ -35,7 +35,6 @@ for (let i = 1; i <= 16; i++) {
 
 // ## Knobs: On touch, override the pads and do RGB/spread for each
 for (let i = 1; i <= 8; i++) {
-  const
   mk3.on(`knobTouch${i}`, (touched) => {
 
   });
