@@ -324,5 +324,14 @@
       "p15": { "addr": 40 },
       "p16": { "addr": 41 }
     }
+  },
+
+  "displays": {
+    "interface": 5,
+    "endpoint": 4,
+
+    "numDisplays": 2,
+    "eachWidth": 480,
+    "eachHeight": 272
   }
 }
