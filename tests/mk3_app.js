@@ -39,3 +39,10 @@ for (let i = 1; i <= 8; i++) {
 
   });
 }
+
+for (let i = 1; i <= 2; i++) {
+  mk3.on(`touchStrip${i}:changed`, ({ value, timestamp }) => {
+    const hexTime = timestamp.toString(16).padStart(4, '0');
+    console.log(`touchStrip ${i}: ${hexTime} ${value}`);
+  });
+}

@@ -185,6 +185,17 @@
       "micInGain": { "msb": 37, "lsb": 36 },
       "headphoneVolume": { "msb": 39, "lsb": 38 },
       "masterVolume": { "msb": 41, "lsb": 40 }
+    },
+
+    "touchStrips": {
+      "touchStrip1": {
+        "timeLsb": 28, "timeMsb": 29,
+        "dataLsb": 30, "dataMsb": 31
+      },
+      "touchStrip2": {
+        "timeLsb": 28, "timeMsb": 29,
+        "dataLsb": 32, "dataMsb": 33
+      }
     }
   },
 
