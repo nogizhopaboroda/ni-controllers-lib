@@ -4,7 +4,7 @@ This is a forked version of https://github.com/met5678/node-traktor-f1 with
 the following changes:
 - Minor bit-rot fixes and cleanup of things that appeared to be in-progress
   refactoring.
-- Maschine MK3 support (alpha quality)
+- Maschine MK3 support (good quality)
 - Traktor D2 support (alpha quality)
 - Some minimal attempts at making things slightly more generic, but in general
   I've just continued in the direction of the original version of the library.
