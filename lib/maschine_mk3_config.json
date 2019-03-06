@@ -224,7 +224,7 @@
 
       "arrowLeft": { "addr": 7 },
       "arrowRight": { "addr": 8 },
-      "fileSaveAs": { "addr": 9 },
+      "fileSave": { "addr": 9 },
       "settings": { "addr": 10 },
       "auto": { "addr": 11 },
       "macroSet": { "addr": 12 },
