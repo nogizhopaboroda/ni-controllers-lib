@@ -46,3 +46,5 @@ for (let i = 1; i <= 2; i++) {
     console.log(`touchStrip ${i}: ${hexTime} ${value}`);
   });
 }
+
+console.log("init completing, stuff should theoretically happen now.");
