@@ -5,8 +5,8 @@
   "author": "Andrew Metcalf <met5678@gmail.com>",
   "main": "./lib/traktor_f1",
   "dependencies": {
-    "lodash": "^4.17.11",
-    "node-hid": "^0.7.8",
+    "lodash": "^4.17.15",
+    "node-hid": "^0.7.9",
     "tinycolor2": "^1.4.1",
     "usb": "^1.5.0"
   },
