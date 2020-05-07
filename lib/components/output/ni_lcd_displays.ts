@@ -4,11 +4,18 @@
  *
  * Note that this isn't an HID protocol so we use 'usb' instead of 'node-hid'
  */
-
-const usb = require('usb');
+import type { Device, Interface, OutEndpoint } from "usb";
+import usb from "usb";
 
 const HEADER_LENGTH = 16;
-function fillHeader(buf, displayNum, x, y, width, height) {
+function fillHeader(
+  buf: ArrayBufferLike,
+  displayNum: number,
+  x: number,
+  y: number,
+  width: number,
+  height: number
+) {
   const view = new DataView(buf);
   view.setUint8(0, 0x84);
   // 0x2 is 0
@@ -25,7 +32,11 @@ function fillHeader(buf, displayNum, x, y, width, height) {
 const COMMAND_LENGTH = 4;
 const PIXEL_LENGTH = 2;
 
-function fillTransmitCommand(buf, numPixels, off=HEADER_LENGTH) {
+function fillTransmitCommand(
+  buf: ArrayBufferLike,
+  numPixels: number,
+  off = HEADER_LENGTH
+) {
   const halfPixels = numPixels / 2;
 
   const view = new DataView(buf, off);
@@ -35,14 +46,41 @@ function fillTransmitCommand(buf, numPixels, off=HEADER_LENGTH) {
   view.setUint8(0, 0);
 }
 
-class LCDDisplays {
-  constructor({ vendorId, productId, displayConfig }) {
-    const device = this.device = usb.findByIds(vendorId, productId);
-    device.open();
-    const iface = this.iface = device.interface(displayConfig.interface);
-    iface.claim();
+interface DisplayConfig {
+  interface: number;
+  endpoint: number;
+  numDisplays: number;
+  eachHeight: number;
+  eachWidth: number;
+}
 
-    this.displaysEndpoint = iface.endpoint(displayConfig.endpoint);
+export class LCDDisplays {
+  device: Device;
+  iface: Interface;
+  displaysEndpoint: OutEndpoint;
+
+  numDisplays: number;
+  width: number;
+  height: number;
+
+  constructor({
+    vendorId,
+    productId,
+    displayConfig,
+  }: {
+    vendorId: number;
+    productId: number;
+    displayConfig: DisplayConfig;
+  }) {
+    this.device = usb.findByIds(vendorId, productId);
+    this.device.open();
+
+    this.iface = this.device.interface(displayConfig.interface);
+    this.iface.claim();
+
+    this.displaysEndpoint = this.iface.endpoint(
+      displayConfig.endpoint
+    ) as OutEndpoint;
     this.numDisplays = displayConfig.numDisplays;
 
     this.width = displayConfig.eachWidth;
@@ -53,13 +91,14 @@ class LCDDisplays {
    * Given an existing ArrayBuffer that contains data to display, blit it to the
    * given display.
    */
-  async paintDisplay(displayNum, pixelBuffer) {
+  async paintDisplay(displayNum: number, pixelBuffer: ArrayBufferLike) {
     const width = this.width;
     const height = this.height;
     const numPixels = width * height;
 
     const buf = new ArrayBuffer(
-      HEADER_LENGTH + COMMAND_LENGTH * 3 + numPixels * PIXEL_LENGTH);
+      HEADER_LENGTH + COMMAND_LENGTH * 3 + numPixels * PIXEL_LENGTH
+    );
     const allData = new Uint8Array(buf);
 
     fillHeader(buf, displayNum, 0, 0, width, height);
@@ -69,9 +108,7 @@ class LCDDisplays {
     const dataStop = dataStart + numPixels * PIXEL_LENGTH;
 
     // Create a Uint8Array on the underlying buffer.
-    const pixelRow = new Uint8Array(pixelBuffer,
-                                    0,
-                                    numPixels * PIXEL_LENGTH);
+    const pixelRow = new Uint8Array(pixelBuffer, 0, numPixels * PIXEL_LENGTH);
 
     allData.set(pixelRow, dataStart);
     // the blit command
@@ -81,7 +118,7 @@ class LCDDisplays {
 
     await new Promise((resolve) => {
       //console.log(Array.from(allData).map(x => x.toString(16)).join(','));
-      this.displaysEndpoint.transfer(allData, resolve);
+      this.displaysEndpoint.transfer(allData as Buffer, resolve);
     });
   }
 
@@ -94,10 +131,8 @@ class LCDDisplays {
    * implement some dumb home-brew RLE-compression, so maybe wait for that.
    * (ex: negative value is a run-length for the following pixels).
    */
-  paintDisplayFromArray(displayNum, array) {
+  paintDisplayFromArray(displayNum: number, array: ArrayLike<number>) {
     const u16arr = Uint16Array.from(array);
     return this.paintDisplay(displayNum, u16arr.buffer);
   }
 }
-
-module.exports = LCDDisplays;

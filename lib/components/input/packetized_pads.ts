@@ -1,4 +1,15 @@
+import type { EventEmitter } from "events";
+import { Widget } from "./WIdget";
+
 const PRESS_THRESHOLD = 256;
+
+interface PacketizedPadsConfig {
+  start: number;
+  repeated: number;
+  length: number;
+  padCount: number;
+  prefix: string;
+}
 
 /**
  * This handles the Maschine mk3 pad pressure messages.  I started out trying to
@@ -33,29 +44,36 @@ const PRESS_THRESHOLD = 256;
  * that tells the button the broadcast logic?  Or just a separate listener that
  * auto-listens to each button?)
  */
-class PacketizedPads {
-  constructor(config, controller, normInt) {
+export class PacketizedPads implements Widget {
+  readonly startOffset: number;
+  readonly repeatCount: number;
+  readonly eachLength: number;
+  readonly padCount: number;
+  readonly prefix: string;
+  readonly controller: EventEmitter;
+  readonly state: Array<number>;
+
+  constructor(
+    config: PacketizedPadsConfig,
+    controller: EventEmitter,
+    normInt: (int: number) => number
+  ) {
     this.startOffset = normInt(config.start);
     this.repeatCount = normInt(config.repeated);
     this.eachLength = normInt(config.length);
     this.padCount = normInt(config.padCount);
     this.prefix = config.prefix;
-
-    this.state = new Array(this.padCount);
-    for (let i = 0; i < this.padCount; i++) {
-      this.state[i] = 0;
-    }
-
     this.controller = controller;
+    this.state = new Array(this.padCount).fill(0);
   }
 
-  parseInput(data) {
+  parseInput(data: Uint8Array) {
     let offset = 1;
     for (let iRep = 0; iRep < this.repeatCount; iRep++, offset += 3) {
       const index = data[offset];
       const isValid = !!(data[offset + 1] & 0xf0);
       // MSB, LSB
-      const pressure = ((data[offset + 1]&0xf) << 8) | (data[offset + 2]);
+      const pressure = ((data[offset + 1] & 0xf) << 8) | data[offset + 2];
 
       //const weirdVal = (data[offset+1]) >> 4;
       //console.log(data.slice(offset, offset+3), pressure, weirdVal);
@@ -71,15 +89,15 @@ class PacketizedPads {
       // pad names are 1-based right now.
       const name = this.prefix + (index + 1);
       if (pressure <= PRESS_THRESHOLD) {
-        const wasPressed = (this.state[index] > PRESS_THRESHOLD);
+        const wasPressed = this.state[index] > PRESS_THRESHOLD;
         this.state[index] = 0;
 
         if (wasPressed) {
           this.controller.emit(`${name}:released`, 0);
-          this.controller.emit(`${this.prefix}:released`, index, 0)
+          this.controller.emit(`${this.prefix}:released`, index, 0);
         }
       } else {
-        const firstPress = (this.state[index] <= PRESS_THRESHOLD);
+        const firstPress = this.state[index] <= PRESS_THRESHOLD;
         this.state[index] = pressure;
 
         if (firstPress) {
@@ -89,9 +107,7 @@ class PacketizedPads {
       }
 
       this.controller.emit(`${name}:pressure`, pressure);
-      this.controller.emit(`${this.prefix}:pressure`,index,  pressure);
+      this.controller.emit(`${this.prefix}:pressure`, index, pressure);
     }
   }
-};
-
-module.exports = PacketizedPads;
+}
