@@ -1,7 +1,7 @@
 import type { EventEmitter } from "events";
 import type { Widget } from "./Widget";
 
-interface ButtonConfig {
+export interface ButtonConfig {
   addr: number;
   bitmask: string;
 }

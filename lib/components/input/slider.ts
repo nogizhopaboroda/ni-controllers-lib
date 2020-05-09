@@ -1,7 +1,7 @@
 import type { EventEmitter } from "events";
 import type { Widget } from "./Widget";
 
-interface SliderConfig {
+export interface SliderConfig {
   msb: number;
   lsb: number;
 }

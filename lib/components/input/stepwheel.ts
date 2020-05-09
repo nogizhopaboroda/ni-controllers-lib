@@ -1,9 +1,8 @@
 import type { EventEmitter } from "events";
 import type { Widget } from "./Widget";
 
-interface StepWheelConfig {
+export interface StepWheelConfig {
   addr: number;
-  bitmask: string;
 }
 
 /**

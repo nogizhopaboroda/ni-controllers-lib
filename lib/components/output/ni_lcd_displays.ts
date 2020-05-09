@@ -8,6 +8,7 @@ import type { Device, Interface, OutEndpoint } from "usb";
 import usb from "usb";
 
 const HEADER_LENGTH = 16;
+
 function fillHeader(
   buf: ArrayBufferLike,
   displayNum: number,
@@ -46,7 +47,7 @@ function fillTransmitCommand(
   view.setUint8(0, 0);
 }
 
-interface DisplayConfig {
+export interface LcdDisplaysConfig {
   interface: number;
   endpoint: number;
   numDisplays: number;
@@ -58,7 +59,6 @@ export class LCDDisplays {
   device: Device;
   iface: Interface;
   displaysEndpoint: OutEndpoint;
-
   numDisplays: number;
   width: number;
   height: number;
@@ -70,7 +70,7 @@ export class LCDDisplays {
   }: {
     vendorId: number;
     productId: number;
-    displayConfig: DisplayConfig;
+    displayConfig: LcdDisplaysConfig;
   }) {
     this.device = usb.findByIds(vendorId, productId);
     this.device.open();

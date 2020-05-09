@@ -1,7 +1,7 @@
 import type { EventEmitter } from "events";
 import type { Widget } from "./Widget";
 
-interface TouchStripConfig {
+export interface TouchStripConfig {
   dataMsb: number;
   timeMsb: number;
   dataLsb: number;

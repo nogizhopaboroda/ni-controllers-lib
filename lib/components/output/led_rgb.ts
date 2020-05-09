@@ -1,6 +1,6 @@
 import tinycolor from "tinycolor2";
 
-interface LedRgbConfig {
+export interface LedRgbConfig {
   bAddr: number;
   gAddr: number;
   rAddr: number;

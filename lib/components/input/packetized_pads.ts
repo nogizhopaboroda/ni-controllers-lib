@@ -3,8 +3,8 @@ import { Widget } from "./WIdget";
 
 const PRESS_THRESHOLD = 256;
 
-interface PacketizedPadsConfig {
-  start: number;
+export interface PacketizedPadsConfig {
+  start: string;
   repeated: number;
   length: number;
   padCount: number;
@@ -56,7 +56,7 @@ export class PacketizedPads implements Widget {
   constructor(
     config: PacketizedPadsConfig,
     controller: EventEmitter,
-    normInt: (int: number) => number
+    normInt: (str: string | number) => number
   ) {
     this.startOffset = normInt(config.start);
     this.repeatCount = normInt(config.repeated);
