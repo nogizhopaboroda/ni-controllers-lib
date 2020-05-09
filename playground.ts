@@ -10,3 +10,7 @@ maschineMk3.on("p:pressed", (index, pressure) => {
 maschineMk3.on("p:pressure", (index, pressure) => {
   console.log({ index, pressure });
 });
+
+maschineMk3.on("g1:pressed", (data) => {
+  console.log(data);
+});

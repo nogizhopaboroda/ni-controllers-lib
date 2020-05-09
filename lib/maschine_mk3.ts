@@ -12,12 +12,13 @@ export class MaschineMk3 extends BaseController {
     super(mk3Config);
   }
 
+  // to enable overloads declaration we need the impl to be in the site
+  // so thi is just a pass through to the base implementation
   on<E extends keyof MaschineMk3EventMap>(
     event: E,
     listener: MaschineMk3EventMap[E]
   ): this;
-  // to enable overloads declaration we need the impl to be in the site
-  // so thi is just a pass through to the base implementation
+  on(event: string | symbol, listener: (...args: any[]) => void): this;
   on(event: string | symbol, listener: (...args: any[]) => void) {
     return super.on(event, listener);
   }
