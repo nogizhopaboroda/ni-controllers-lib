@@ -1,4 +1,4 @@
-import { MaschineMk3 } from "./lib/maschine_mk3";
+import { MaschineMk3 } from "../lib/maschine_mk3";
 
 const maschineMk3 = new MaschineMk3();
 
