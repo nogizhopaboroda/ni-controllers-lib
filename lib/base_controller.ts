@@ -1,5 +1,4 @@
 import { EventEmitter } from "events";
-import HID from "node-hid";
 
 import { Button, ButtonConfig } from "./components/input/button";
 import {
@@ -22,6 +21,12 @@ import {
   LCDDisplays,
   LcdDisplaysConfig,
 } from "./components/output/ni_lcd_displays";
+import {
+  HidAdapter,
+  requestHidDevice,
+  requestUsbDevice,
+  UsbAdapter,
+} from "./usb/usb_adapter";
 
 interface InputConf {
   firstByte: string;
@@ -89,76 +94,71 @@ export class BaseController extends EventEmitter {
   readonly inputWidgetGroups: Record<string, Array<Widget>> = {};
   readonly inputFirstByteToGroupName = new Map<number, string>();
 
-  device: HID.HID | null = null;
-
   isRGB = true;
 
-  constructor(config: {
-    name: string;
-    vendorId: number;
-    productId: number;
-    ledBrightestValue: number;
-    indexed_led_mapping?: LedIndexedMapping;
-    input: InputConf;
-    input2?: InputConf;
-    output: OutputConf;
-    output2?: OutputConf;
-    displays?: LcdDisplaysConfig;
-  }) {
+  constructor(
+    readonly config: {
+      name: string;
+      vendorId: number;
+      productId: number;
+      ledBrightestValue: number;
+      indexed_led_mapping?: LedIndexedMapping;
+      input: InputConf;
+      input2?: InputConf;
+      output: OutputConf;
+      output2?: OutputConf;
+      displays?: LcdDisplaysConfig;
+    }
+  ) {
     super();
+  }
 
-    const vendorId = normInt(config.vendorId);
-    const productId = normInt(config.productId);
-    const controllerName = config.name;
-    const brightestValue = config.ledBrightestValue;
+  async init(runtime: "node" | "web" = "node") {
+    const hidDevice = await requestHidDevice(
+      this.config.vendorId,
+      this.config.productId,
+      runtime
+    );
+    const usbDevice = await requestUsbDevice(
+      this.config.vendorId,
+      this.config.productId,
+      runtime
+    );
 
-    for (let key in config) {
+    for (let key in this.config) {
       if (key === "input" || key === "input2") {
-        const inputConfig = config[key];
+        const inputConfig = this.config[key];
         if (inputConfig != null) {
-          this.processInputBlock(key, inputConfig);
+          this.processInputBlock(key, inputConfig, hidDevice);
         }
       }
 
       if (
         (key === "output" || key === "output2") &&
-        config.indexed_led_mapping != null
+        this.config.indexed_led_mapping != null
       ) {
-        const outputConfig = config[key];
+        const outputConfig = this.config[key];
         if (outputConfig != null) {
           this.processOutputBlock(
             key,
             outputConfig,
-            brightestValue,
-            config.indexed_led_mapping
+            this.config.ledBrightestValue,
+            this.config.indexed_led_mapping,
+            hidDevice
           );
         }
       }
 
       if (key === "displays") {
-        let displaysConfig = config[key];
+        let displaysConfig = this.config[key];
         if (displaysConfig != null) {
-          this.processDisplayBlock(
-            config.vendorId,
-            config.productId,
-            displaysConfig
-          );
+          this.processDisplayBlock(usbDevice, displaysConfig);
         }
       }
     }
-
-    try {
-      this.device = new HID.HID(vendorId, productId);
-      this.device.on("data", this.parseInput.bind(this));
-      this.device.on("error", (ex) => {
-        console.log("device error:", ex);
-      });
-    } catch (e) {
-      console.log(`Could not connect to ${controllerName}:`, e);
-    }
   }
 
-  processInputBlock(name: string, iconf: InputConf) {
+  processInputBlock(name: string, iconf: InputConf, hidDevice: HidAdapter) {
     // previously, input processing would just run over all the dicts and tell
     // them to parse, but because we now segment by packet, it's simplest to
     // just linearly stash widgets per input group.
@@ -227,13 +227,16 @@ export class BaseController extends EventEmitter {
         this.buttons[name] = p;
       }
     }
+
+    hidDevice.onData(this.parseInput.bind(this));
   }
 
   processOutputBlock(
     name: string,
     oconf: OutputConf,
     brightestValue: number,
-    indexedLedMapping: LedIndexedMapping
+    indexedLedMapping: LedIndexedMapping,
+    hidDevice: HidAdapter
   ) {
     // Setup the output packet.
     const packetLength = normInt(oconf.length);
@@ -255,14 +258,10 @@ export class BaseController extends EventEmitter {
           setImmediate(oinfo.sendOutput);
         }
       },
-      sendOutput: () => {
-        if (this.device == null) {
-          throw new Error("HID failed to initialise");
-        }
-
+      sendOutput: async () => {
         try {
           // todo not convinced we need to a transform to an actual array
-          this.device.write(Array.from(outPacket));
+          await hidDevice.write(Array.from(outPacket));
           oinfo.dirty = false;
         } catch (ex) {
           console.log(`failed write of ${name}`, ex);
@@ -317,14 +316,9 @@ export class BaseController extends EventEmitter {
     }
   }
 
-  processDisplayBlock(
-    vendorId: number,
-    productId: number,
-    config: LcdDisplaysConfig
-  ) {
+  processDisplayBlock(device: UsbAdapter, config: LcdDisplaysConfig) {
     this.displays = new LCDDisplays({
-      vendorId,
-      productId,
+      device,
       displayConfig: config,
     });
   }

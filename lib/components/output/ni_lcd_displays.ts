@@ -4,8 +4,7 @@
  *
  * Note that this isn't an HID protocol so we use 'usb' instead of 'node-hid'
  */
-import type { Device, Interface, OutEndpoint } from "usb";
-import usb from "usb";
+import { UsbAdapter } from "../../usb/usb_adapter";
 
 const HEADER_LENGTH = 16;
 
@@ -56,33 +55,23 @@ export interface LcdDisplaysConfig {
 }
 
 export class LCDDisplays {
-  device: Device;
-  iface: Interface;
-  displaysEndpoint: OutEndpoint;
-  numDisplays: number;
-  width: number;
-  height: number;
+  readonly device: UsbAdapter;
+  readonly endpointId: number;
+  readonly numDisplays: number;
+  readonly width: number;
+  readonly height: number;
 
   constructor({
-    vendorId,
-    productId,
+    device,
     displayConfig,
   }: {
-    vendorId: number;
-    productId: number;
+    device: UsbAdapter;
     displayConfig: LcdDisplaysConfig;
   }) {
-    this.device = usb.findByIds(vendorId, productId);
-    this.device.open();
+    this.device = device;
+    this.endpointId = displayConfig.endpoint;
 
-    this.iface = this.device.interface(displayConfig.interface);
-    this.iface.claim();
-
-    this.displaysEndpoint = this.iface.endpoint(
-      displayConfig.endpoint
-    ) as OutEndpoint;
     this.numDisplays = displayConfig.numDisplays;
-
     this.width = displayConfig.eachWidth;
     this.height = displayConfig.eachHeight;
   }
@@ -116,10 +105,7 @@ export class LCDDisplays {
     // the end command
     allData[dataStop + COMMAND_LENGTH] = 0x40;
 
-    await new Promise((resolve) => {
-      //console.log(Array.from(allData).map(x => x.toString(16)).join(','));
-      this.displaysEndpoint.transfer(allData as Buffer, resolve);
-    });
+    await this.device.transferOut(this.endpointId, allData);
   }
 
   /**
