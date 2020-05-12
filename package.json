@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "A package providing access to the Traktor F1 controller. Supports all inputs and setting any LED.",
   "author": "Andrew Metcalf <met5678@gmail.com>",
-  "main": "./lib/traktor_f1",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "lodash": "^4.17.15",
     "node-hid": "^0.7.9",
