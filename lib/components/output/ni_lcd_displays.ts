@@ -4,7 +4,7 @@
  *
  * Note that this isn't an HID protocol so we use 'usb' instead of 'node-hid'
  */
-import { UsbAdapter } from "../../usb/usb_adapter";
+import { UsbAdapter } from "../../usb/adapter";
 
 const HEADER_LENGTH = 16;
 

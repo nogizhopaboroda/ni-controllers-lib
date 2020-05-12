@@ -23,10 +23,10 @@ import {
 } from "./components/output/ni_lcd_displays";
 import {
   HidAdapter,
-  requestHidDevice,
-  requestUsbDevice,
+  HidAdapterFactory,
   UsbAdapter,
-} from "./usb/usb_adapter";
+  UsbAdapterFactory,
+} from "./usb/adapter";
 
 interface InputConf {
   firstByte: string;
@@ -108,21 +108,21 @@ export class BaseController extends EventEmitter {
       output: OutputConf;
       output2?: OutputConf;
       displays?: LcdDisplaysConfig;
-    }
+    },
+    readonly createHid: HidAdapterFactory,
+    readonly createUsb: UsbAdapterFactory
   ) {
     super();
   }
 
-  async init(runtime: "node" | "web" = "node") {
-    const hidDevice = await requestHidDevice(
+  async init() {
+    const hidDevice = await this.createHid(
       this.config.vendorId,
-      this.config.productId,
-      runtime
+      this.config.productId
     );
-    const usbDevice = await requestUsbDevice(
+    const usbDevice = await this.createUsb(
       this.config.vendorId,
-      this.config.productId,
-      runtime
+      this.config.productId
     );
 
     for (let key in this.config) {
