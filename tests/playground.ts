@@ -1,22 +1,7 @@
 import { MaschineMk3 } from "../lib/maschine_mk3";
 import { createNodeHidAdapter, createNodeUsbAdapter } from "../lib/usb/node";
+import { runBasicDemo } from "./runBasicDemo";
 
-const maschineMk3 = new MaschineMk3(createNodeHidAdapter, createNodeUsbAdapter);
-
-maschineMk3
-  .init()
-  .then(() => {
-    maschineMk3.setRGB("p1", 255, 0, 0);
-    maschineMk3.on("p:pressed", (index, pressure) => {
-      console.log({ index, pressure });
-    });
-
-    maschineMk3.on("p:pressure", (index, pressure) => {
-      console.log({ index, pressure });
-    });
-
-    maschineMk3.on("g1:pressed", (data) => {
-      console.log(data);
-    });
-  })
-  .catch(console.error);
+runBasicDemo(new MaschineMk3(createNodeHidAdapter, createNodeUsbAdapter)).catch(
+  console.error
+);

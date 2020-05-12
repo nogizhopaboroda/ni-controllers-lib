@@ -15,10 +15,11 @@ export interface HidAdapter {
 }
 
 export type HidAdapterFactory = (
-    vendorId: number,
-    productId: number,
+  vendorId: number,
+  productId: number
 ) => Promise<HidAdapter>;
+
 export type UsbAdapterFactory = (
-    vendorId: number,
-    productId: number,
+  vendorId: number,
+  productId: number
 ) => Promise<UsbAdapter>;

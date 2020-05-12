@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
+    "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "slimerjs": "^1.0.0",
@@ -31,11 +32,15 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "prepack": "npm run clean && npm run build",
-    "playground": "ts-node --transpile-only tests/playground.ts"
+    "playground": "ts-node --transpile-only tests/playground.ts",
+    "web-playground": "parcel tests/web_playground.html"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/asutherland/node-traktor-f1.git"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "browserslist": [
+    "last 2 Chrome versions"
+  ]
 }
