@@ -1,5 +1,5 @@
 import type { EventEmitter } from "events";
-import { Widget } from "./WIdget";
+import { Widget } from "./Widget";
 
 const PRESS_THRESHOLD = 256;
 

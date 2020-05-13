@@ -1,6 +1,6 @@
-const Mk3 = require('../lib/maschine_mk3');
+import { MaschineMk3 } from "../dist/maschine_mk3";
 
-const mk3 = new Mk3();
+const mk3 = new MaschineMk3();
 
 // ## Group Pads: Display colors with transient "flash" on press.
 for (let i = 1; i <= 8; i++) {
