@@ -1,24 +1,40 @@
 {
-  "name": "node-traktor-f1",
-  "version": "0.0.1",
-  "description": "A package providing access to the Traktor F1 controller. Supports all inputs and setting any LED.",
+  "name": "ni-controllers-lib",
+  "version": "1.0.0-alpha.1",
+  "description": "A package providing access to some Native Instruments controllers. Supports all inputs and setting any LED and LCD displays when available.",
   "author": "Andrew Metcalf <met5678@gmail.com>",
-  "main": "./lib/traktor_f1",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
+    "@types/node": "^13.13.5",
+    "@types/node-hid": "^1.2.0",
+    "@types/tinycolor2": "^1.4.2",
+    "@types/usb": "^1.5.1",
     "lodash": "^4.17.15",
     "node-hid": "^0.7.9",
     "tinycolor2": "^1.4.1",
     "usb": "^1.5.0"
   },
   "devDependencies": {
-    "slimerjs": "^1.0.0"
+    "concurrently": "^5.2.0",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "slimerjs": "^1.0.0",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.8.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "concurrently \"tsc --noEmit\" \"prettier --check lib/**/*{.ts,.json}\"",
+    "clean": "rimraf dist/*",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "prepack": "npm run clean && npm run build",
+    "playground": "ts-node --transpile-only tests/playground.ts"
   },
   "repository": {
     "type": "git",
-    "url": "https://met5678@bitbucket.org/met5678/node-traktor-f1.git"
+    "url": "https://github.com/asutherland/node-traktor-f1.git"
   },
   "license": "ISC"
 }

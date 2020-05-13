@@ -1,5 +1,3 @@
-'use strict';
-
 // The D2 has 2 packet configurations:
 //
 // ## First Byte is 1 ##
@@ -14,14 +12,11 @@
 // insertion seems to happen at byte 9.
 //
 
-const BaseController = require('./base_controller');
+import { BaseController } from "./base_controller";
+import d2Config from "./traktor_d2_config.json";
 
-const d2Config = require('./traktor_d2_config.json');
-
-class TraktorD2 extends BaseController {
-	constructor() {
-		super(d2Config);
-	}
+export class TraktorD2 extends BaseController {
+  constructor() {
+    super(d2Config);
+  }
 }
-
-module.exports = TraktorD2;
