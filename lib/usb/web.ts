@@ -5,6 +5,22 @@ import type {
   UsbAdapterFactory,
 } from "./adapter";
 
+class WebUsbAdapter implements UsbAdapter {
+  constructor(readonly nDevice: USBDevice) {}
+
+  async open() {
+    return await this.nDevice.open();
+  }
+
+  async claimInterface(interfaceId: number) {
+    return await this.nDevice.claimInterface(interfaceId);
+  }
+
+  async transferOut(endpointId: number, data: Uint8Array) {
+    return await this.nDevice.transferOut(endpointId, data);
+  }
+}
+
 const WebHidAdapterHandler = Symbol("WebHidAdapterHandler");
 class WebHidAdapter implements HidAdapter {
   constructor(readonly nDevice: HIDDevice) {}
@@ -36,21 +52,15 @@ class WebHidAdapter implements HidAdapter {
   }
 }
 
-class WebUsbAdapter implements UsbAdapter {
-  constructor(readonly nDevice: USBDevice) {}
-
-  async open() {
-    return await this.nDevice.open();
-  }
-
-  async claimInterface(interfaceId: number) {
-    return await this.nDevice.claimInterface(interfaceId);
-  }
-
-  async transferOut(endpointId: number, data: Uint8Array) {
-    return await this.nDevice.transferOut(endpointId, data);
-  }
-}
+export const createWebUsbAdapter: UsbAdapterFactory = async (
+  vendorId: number,
+  productId: number
+) =>
+  new WebUsbAdapter(
+    await navigator.usb.requestDevice({
+      filters: [{ vendorId, productId }],
+    })
+  );
 
 export const createWebHidAdapter: HidAdapterFactory = async (
   vendorId: number,
@@ -62,14 +72,4 @@ export const createWebHidAdapter: HidAdapterFactory = async (
         filters: [{ vendorId, productId }],
       })
     )[0]
-  );
-
-export const createWebUsbAdapter: UsbAdapterFactory = async (
-  vendorId: number,
-  productId: number
-) =>
-  new WebUsbAdapter(
-    await navigator.usb.requestDevice({
-      filters: [{ vendorId, productId }],
-    })
   );

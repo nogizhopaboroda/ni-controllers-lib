@@ -44,18 +44,14 @@ class NodeUsbAdapter implements UsbAdapter {
   }
 }
 
-export const createNodeUsbAdapter: UsbAdapterFactory = async (
-  vendorId: number,
-  productId: number
-) => new NodeUsbAdapter(NodeUsb.findByIds(vendorId, productId));
-
 class NodeHidAdapter implements HidAdapter {
   constructor(readonly nDevice: NodeHid.HID) {
     this.nDevice.on("error", console.error);
   }
 
-  async open() {
-    return Promise.resolve(undefined);
+  open() {
+    // the node implementation doesn't need to be opened
+    return Promise.resolve();
   }
 
   async write(data: Array<number>) {
@@ -66,6 +62,11 @@ class NodeHidAdapter implements HidAdapter {
     this.nDevice.on("data", callback);
   }
 }
+
+export const createNodeUsbAdapter: UsbAdapterFactory = async (
+  vendorId: number,
+  productId: number
+) => new NodeUsbAdapter(NodeUsb.findByIds(vendorId, productId));
 
 export const createNodeHidAdapter: HidAdapterFactory = async (
   vendorId: number,

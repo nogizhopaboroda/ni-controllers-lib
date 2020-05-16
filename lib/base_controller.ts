@@ -51,7 +51,7 @@ interface OutputInfo {
   dirty: boolean;
   invalidateOutput: () => void;
   outPacket: Uint8Array;
-  sendOutput: () => void;
+  sendOutput: () => Promise<void>;
 }
 
 function normInt(val: string | number) {
@@ -125,6 +125,9 @@ export class BaseController extends EventEmitter {
       this.config.productId
     );
 
+    await hidDevice.open();
+    await usbDevice.open();
+
     for (let key in this.config) {
       if (key === "input" || key === "input2") {
         const inputConfig = this.config[key];
@@ -152,7 +155,7 @@ export class BaseController extends EventEmitter {
       if (key === "displays") {
         let displaysConfig = this.config[key];
         if (displaysConfig != null) {
-          this.processDisplayBlock(usbDevice, displaysConfig);
+          await this.processDisplayBlock(usbDevice, displaysConfig);
         }
       }
     }
@@ -255,18 +258,15 @@ export class BaseController extends EventEmitter {
       invalidateOutput: () => {
         if (!oinfo.dirty) {
           oinfo.dirty = true;
-          setImmediate(oinfo.sendOutput);
+          oinfo.sendOutput().catch((ex) => {
+            console.log(`failed write of ${name}`, ex);
+            console.log(`outPacket was: ${outPacket.join("   ")}`);
+          });
         }
       },
       sendOutput: async () => {
-        try {
-          // todo not convinced we need to a transform to an actual array
-          await hidDevice.write(Array.from(outPacket));
-          oinfo.dirty = false;
-        } catch (ex) {
-          console.log(`failed write of ${name}`, ex);
-          console.log(`outPacket was: ${outPacket.join("   ")}`);
-        }
+        await hidDevice.write(Array.from(outPacket));
+        oinfo.dirty = false;
       },
     });
 
@@ -316,7 +316,8 @@ export class BaseController extends EventEmitter {
     }
   }
 
-  processDisplayBlock(device: UsbAdapter, config: LcdDisplaysConfig) {
+  async processDisplayBlock(device: UsbAdapter, config: LcdDisplaysConfig) {
+    await device.claimInterface(config.interface);
     this.displays = new LCDDisplays({
       device,
       displayConfig: config,

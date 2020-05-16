@@ -27,17 +27,19 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "test": "concurrently \"tsc --noEmit\" \"prettier --check lib/**/*{.ts,.json}\"",
+    "check:style": "prettier --check '{lib,types,examples}/**/*{.ts,.d.ts,.json,*.md}' '*.md'",
+    "check:ts": "tsc --noEmit",
+    "test": "concurrently 'npm run check:ts' 'npm run check:style'",
     "clean": "rimraf dist/*",
     "build": "tsc",
     "watch": "tsc --watch",
     "prepack": "npm run clean && npm run build",
-    "playground": "ts-node --transpile-only tests/playground.ts",
-    "web-playground": "parcel tests/web_playground.html"
+    "example:maschinemk3:node": "ts-node --transpile-only examples/maschine_mk3/node.ts",
+    "example:maschinemk3:web": "parcel examples/maschine_mk3/web.html"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/asutherland/node-traktor-f1.git"
+    "url": "https://github.com/asutherland/ni-controllers-lib.git"
   },
   "license": "ISC",
   "browserslist": [
