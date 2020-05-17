@@ -49,6 +49,7 @@ interface OutputConf {
 
 interface OutputInfo {
   dirty: boolean;
+  activeWrite: boolean;
   invalidateOutput: () => void;
   outPacket: Uint8Array;
   sendOutput: () => Promise<void>;
@@ -253,20 +254,39 @@ export class BaseController extends EventEmitter {
     // Note that the functions below have this=BaseController and we capture the
     // oinfo for manipulating dirty in an externally inspectable way.
     const oinfo: OutputInfo = (this.outputInfo[name] = {
+      // Tracks whether there are changes that have occurred since we last wrote
+      // to the device.  When dirty is true, it's guaranteed that a subsequent
+      // write will be initiated.
       dirty: false,
+      // Tracks whether there's currently an active async write to the device.
+      activeWrite: false,
       outPacket,
+      // Invalidate, flushing the write once we get to the microtask checkpoint.
       invalidateOutput: () => {
         if (!oinfo.dirty) {
           oinfo.dirty = true;
-          oinfo.sendOutput().catch((ex) => {
-            console.log(`failed write of ${name}`, ex);
-            console.log(`outPacket was: ${outPacket.join("   ")}`);
-          });
+          if (!oinfo.activeWrite) {
+            Promise.resolve().then(() => {
+              oinfo.sendOutput().catch((ex) => {
+                console.log(`failed write of ${name}`, ex);
+                console.log(`outPacket was: ${outPacket.join("   ")}`);
+              });
+            });
+          }
         }
       },
       sendOutput: async () => {
-        await hidDevice.write(Array.from(outPacket));
-        oinfo.dirty = false;
+        // Our I/O writes are async, so it's possible that the output buffer
+        // has been modified again by the time our write returns, so we
+        // structure this method as a loop.
+        oinfo.activeWrite = true;
+        while (oinfo.dirty) {
+          // We're writing the current state, so clear the dirty bit.
+          oinfo.dirty = false;
+          await hidDevice.write(Array.from(outPacket));
+          // The dirty bit may have become set again, the loop will handle that.
+        }
+        oinfo.activeWrite = false;
       },
     });
 
