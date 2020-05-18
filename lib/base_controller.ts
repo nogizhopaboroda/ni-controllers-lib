@@ -1,5 +1,4 @@
 import { EventEmitter } from "events";
-import HID from "node-hid";
 
 import { Button, ButtonConfig } from "./components/input/button";
 import {
@@ -22,6 +21,12 @@ import {
   LCDDisplays,
   LcdDisplaysConfig,
 } from "./components/output/ni_lcd_displays";
+import {
+  HidAdapter,
+  HidAdapterFactory,
+  UsbAdapter,
+  UsbAdapterFactory,
+} from "./usb/adapter";
 
 interface InputConf {
   firstByte: string;
@@ -44,9 +49,10 @@ interface OutputConf {
 
 interface OutputInfo {
   dirty: boolean;
+  activeWrite: boolean;
   invalidateOutput: () => void;
   outPacket: Uint8Array;
-  sendOutput: () => void;
+  sendOutput: () => Promise<void>;
 }
 
 function normInt(val: string | number) {
@@ -89,76 +95,74 @@ export class BaseController extends EventEmitter {
   readonly inputWidgetGroups: Record<string, Array<Widget>> = {};
   readonly inputFirstByteToGroupName = new Map<number, string>();
 
-  device: HID.HID | null = null;
-
   isRGB = true;
 
-  constructor(config: {
-    name: string;
-    vendorId: number;
-    productId: number;
-    ledBrightestValue: number;
-    indexed_led_mapping?: LedIndexedMapping;
-    input: InputConf;
-    input2?: InputConf;
-    output: OutputConf;
-    output2?: OutputConf;
-    displays?: LcdDisplaysConfig;
-  }) {
+  constructor(
+    readonly config: {
+      name: string;
+      vendorId: number;
+      productId: number;
+      ledBrightestValue: number;
+      indexed_led_mapping?: LedIndexedMapping;
+      input: InputConf;
+      input2?: InputConf;
+      output: OutputConf;
+      output2?: OutputConf;
+      displays?: LcdDisplaysConfig;
+    },
+    readonly createHid: HidAdapterFactory,
+    readonly createUsb: UsbAdapterFactory
+  ) {
     super();
+  }
 
-    const vendorId = normInt(config.vendorId);
-    const productId = normInt(config.productId);
-    const controllerName = config.name;
-    const brightestValue = config.ledBrightestValue;
+  async init() {
+    const hidDevice = await this.createHid(
+      this.config.vendorId,
+      this.config.productId
+    );
+    const usbDevice = await this.createUsb(
+      this.config.vendorId,
+      this.config.productId
+    );
 
-    for (let key in config) {
+    await hidDevice.open();
+    await usbDevice.open();
+
+    for (let key in this.config) {
       if (key === "input" || key === "input2") {
-        const inputConfig = config[key];
+        const inputConfig = this.config[key];
         if (inputConfig != null) {
-          this.processInputBlock(key, inputConfig);
+          this.processInputBlock(key, inputConfig, hidDevice);
         }
       }
 
       if (
         (key === "output" || key === "output2") &&
-        config.indexed_led_mapping != null
+        this.config.indexed_led_mapping != null
       ) {
-        const outputConfig = config[key];
+        const outputConfig = this.config[key];
         if (outputConfig != null) {
           this.processOutputBlock(
             key,
             outputConfig,
-            brightestValue,
-            config.indexed_led_mapping
+            this.config.ledBrightestValue,
+            this.config.indexed_led_mapping,
+            hidDevice
           );
         }
       }
 
       if (key === "displays") {
-        let displaysConfig = config[key];
+        let displaysConfig = this.config[key];
         if (displaysConfig != null) {
-          this.processDisplayBlock(
-            config.vendorId,
-            config.productId,
-            displaysConfig
-          );
+          await this.processDisplayBlock(usbDevice, displaysConfig);
         }
       }
     }
-
-    try {
-      this.device = new HID.HID(vendorId, productId);
-      this.device.on("data", this.parseInput.bind(this));
-      this.device.on("error", (ex) => {
-        console.log("device error:", ex);
-      });
-    } catch (e) {
-      console.log(`Could not connect to ${controllerName}:`, e);
-    }
   }
 
-  processInputBlock(name: string, iconf: InputConf) {
+  processInputBlock(name: string, iconf: InputConf, hidDevice: HidAdapter) {
     // previously, input processing would just run over all the dicts and tell
     // them to parse, but because we now segment by packet, it's simplest to
     // just linearly stash widgets per input group.
@@ -227,13 +231,16 @@ export class BaseController extends EventEmitter {
         this.buttons[name] = p;
       }
     }
+
+    hidDevice.onData(this.parseInput.bind(this));
   }
 
   processOutputBlock(
     name: string,
     oconf: OutputConf,
     brightestValue: number,
-    indexedLedMapping: LedIndexedMapping
+    indexedLedMapping: LedIndexedMapping,
+    hidDevice: HidAdapter
   ) {
     // Setup the output packet.
     const packetLength = normInt(oconf.length);
@@ -247,27 +254,39 @@ export class BaseController extends EventEmitter {
     // Note that the functions below have this=BaseController and we capture the
     // oinfo for manipulating dirty in an externally inspectable way.
     const oinfo: OutputInfo = (this.outputInfo[name] = {
+      // Tracks whether there are changes that have occurred since we last wrote
+      // to the device.  When dirty is true, it's guaranteed that a subsequent
+      // write will be initiated.
       dirty: false,
+      // Tracks whether there's currently an active async write to the device.
+      activeWrite: false,
       outPacket,
+      // Invalidate, flushing the write once we get to the microtask checkpoint.
       invalidateOutput: () => {
         if (!oinfo.dirty) {
           oinfo.dirty = true;
-          setImmediate(oinfo.sendOutput);
+          if (!oinfo.activeWrite) {
+            Promise.resolve().then(() => {
+              oinfo.sendOutput().catch((ex) => {
+                console.log(`failed write of ${name}`, ex);
+                console.log(`outPacket was: ${outPacket.join("   ")}`);
+              });
+            });
+          }
         }
       },
-      sendOutput: () => {
-        if (this.device == null) {
-          throw new Error("HID failed to initialise");
-        }
-
-        try {
-          // todo not convinced we need to a transform to an actual array
-          this.device.write(Array.from(outPacket));
+      sendOutput: async () => {
+        // Our I/O writes are async, so it's possible that the output buffer
+        // has been modified again by the time our write returns, so we
+        // structure this method as a loop.
+        oinfo.activeWrite = true;
+        while (oinfo.dirty) {
+          // We're writing the current state, so clear the dirty bit.
           oinfo.dirty = false;
-        } catch (ex) {
-          console.log(`failed write of ${name}`, ex);
-          console.log(`outPacket was: ${outPacket.join("   ")}`);
+          await hidDevice.write(Array.from(outPacket));
+          // The dirty bit may have become set again, the loop will handle that.
         }
+        oinfo.activeWrite = false;
       },
     });
 
@@ -317,14 +336,10 @@ export class BaseController extends EventEmitter {
     }
   }
 
-  processDisplayBlock(
-    vendorId: number,
-    productId: number,
-    config: LcdDisplaysConfig
-  ) {
+  async processDisplayBlock(device: UsbAdapter, config: LcdDisplaysConfig) {
+    await device.claimInterface(config.interface);
     this.displays = new LCDDisplays({
-      vendorId,
-      productId,
+      device,
       displayConfig: config,
     });
   }

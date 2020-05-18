@@ -1,5 +1,6 @@
 import { BaseController } from "./base_controller";
 import mk3Config from "./maschine_mk3_config.json";
+import type { HidAdapterFactory, UsbAdapterFactory } from "./usb/adapter";
 
 interface MaschineMk3EventMap {
   "p:pressed": (index: number, pressure: number) => void;
@@ -8,8 +9,8 @@ interface MaschineMk3EventMap {
 }
 
 export class MaschineMk3 extends BaseController {
-  constructor() {
-    super(mk3Config);
+  constructor(createHid: HidAdapterFactory, createUsb: UsbAdapterFactory) {
+    super(mk3Config, createHid, createUsb);
   }
 
   // to enable overloads declaration we need the impl to be in the site

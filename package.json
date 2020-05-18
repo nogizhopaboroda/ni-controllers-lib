@@ -1,6 +1,6 @@
 {
   "name": "ni-controllers-lib",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "A package providing access to some Native Instruments controllers. Supports all inputs and setting any LED and LCD displays when available.",
   "author": "Andrew Metcalf <met5678@gmail.com>",
   "files": [
@@ -11,6 +11,7 @@
     "@types/node-hid": "^1.2.0",
     "@types/tinycolor2": "^1.4.2",
     "@types/usb": "^1.5.1",
+    "@types/w3c-web-usb": "^1.0.4",
     "lodash": "^4.17.15",
     "node-hid": "^0.7.9",
     "tinycolor2": "^1.4.1",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
+    "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "slimerjs": "^1.0.0",
@@ -25,16 +27,22 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "test": "concurrently \"tsc --noEmit\" \"prettier --check lib/**/*{.ts,.json}\"",
+    "check:style": "prettier --check '{lib,types,examples}/**/*{.ts,.d.ts,.json,*.md}' '*.md'",
+    "check:ts": "tsc --noEmit",
+    "test": "concurrently 'npm run check:ts' 'npm run check:style'",
     "clean": "rimraf dist/*",
     "build": "tsc",
     "watch": "tsc --watch",
     "prepack": "npm run clean && npm run build",
-    "playground": "ts-node --transpile-only tests/playground.ts"
+    "example:maschinemk3:node": "ts-node --transpile-only examples/maschine_mk3/node.ts",
+    "example:maschinemk3:web": "parcel examples/maschine_mk3/web.html"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/asutherland/node-traktor-f1.git"
+    "url": "https://github.com/asutherland/ni-controllers-lib.git"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "browserslist": [
+    "last 2 Chrome versions"
+  ]
 }
