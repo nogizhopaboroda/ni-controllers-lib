@@ -1,0 +1,713 @@
+{
+  "vendorId": 6092,
+  "productId": 4608,
+  "name": "Maschine mk2 mikro",
+
+  "ledBrightestValue": 63,
+
+  "indexed_led_mapping_source": "Taken from the amazing MIT licensed CABL Macshine Jam helper logic: https://github.com/shaduzlabs/cabl/blob/master/src/devices/ni/MaschineJamHelper.cpp",
+  "indexed_led_mapping": [
+    {
+      "red": 0,
+      "green": 0,
+      "blue": 0
+    },
+    {
+      "red": 0,
+      "green": 0,
+      "blue": 0
+    },
+    {
+      "red": 0,
+      "green": 0,
+      "blue": 0
+    },
+    {
+      "red": 0,
+      "green": 0,
+      "blue": 0
+    },
+    {
+      "red": 32,
+      "green": 0,
+      "blue": 0
+    },
+    {
+      "red": 64,
+      "green": 0,
+      "blue": 0
+    },
+    {
+      "red": 255,
+      "green": 0,
+      "blue": 0
+    },
+    {
+      "red": 255,
+      "green": 32,
+      "blue": 16
+    },
+    {
+      "red": 32,
+      "green": 16,
+      "blue": 0
+    },
+    {
+      "red": 64,
+      "green": 16,
+      "blue": 0
+    },
+    {
+      "red": 255,
+      "green": 32,
+      "blue": 0
+    },
+    {
+      "red": 255,
+      "green": 64,
+      "blue": 32
+    },
+    {
+      "red": 32,
+      "green": 48,
+      "blue": 8
+    },
+    {
+      "red": 64,
+      "green": 64,
+      "blue": 0
+    },
+    {
+      "red": 255,
+      "green": 96,
+      "blue": 0
+    },
+    {
+      "red": 255,
+      "green": 128,
+      "blue": 48
+    },
+    {
+      "red": 40,
+      "green": 56,
+      "blue": 0
+    },
+    {
+      "red": 64,
+      "green": 96,
+      "blue": 0
+    },
+    {
+      "red": 255,
+      "green": 224,
+      "blue": 0
+    },
+    {
+      "red": 128,
+      "green": 255,
+      "blue": 64
+    },
+    {
+      "red": 24,
+      "green": 40,
+      "blue": 0
+    },
+    {
+      "red": 96,
+      "green": 176,
+      "blue": 0
+    },
+    {
+      "red": 96,
+      "green": 255,
+      "blue": 0
+    },
+    {
+      "red": 112,
+      "green": 255,
+      "blue": 64
+    },
+    {
+      "red": 16,
+      "green": 40,
+      "blue": 0
+    },
+    {
+      "red": 56,
+      "green": 112,
+      "blue": 0
+    },
+    {
+      "red": 72,
+      "green": 255,
+      "blue": 0
+    },
+    {
+      "red": 64,
+      "green": 255,
+      "blue": 64
+    },
+    {
+      "red": 0,
+      "green": 40,
+      "blue": 0
+    },
+    {
+      "red": 0,
+      "green": 96,
+      "blue": 0
+    },
+    {
+      "red": 0,
+      "green": 255,
+      "blue": 0
+    },
+    {
+      "red": 48,
+      "green": 255,
+      "blue": 48
+    },
+    {
+      "red": 0,
+      "green": 40,
+      "blue": 16
+    },
+    {
+      "red": 0,
+      "green": 112,
+      "blue": 32
+    },
+    {
+      "red": 0,
+      "green": 255,
+      "blue": 48
+    },
+    {
+      "red": 56,
+      "green": 255,
+      "blue": 40
+    },
+    {
+      "red": 0,
+      "green": 40,
+      "blue": 40
+    },
+    {
+      "red": 0,
+      "green": 112,
+      "blue": 96
+    },
+    {
+      "red": 0,
+      "green": 255,
+      "blue": 226
+    },
+    {
+      "red": 64,
+      "green": 255,
+      "blue": 255
+    },
+    {
+      "red": 0,
+      "green": 24,
+      "blue": 48
+    },
+    {
+      "red": 0,
+      "green": 64,
+      "blue": 112
+    },
+    {
+      "red": 0,
+      "green": 96,
+      "blue": 255
+    },
+    {
+      "red": 40,
+      "green": 160,
+      "blue": 255
+    },
+    {
+      "red": 0,
+      "green": 0,
+      "blue": 40
+    },
+    {
+      "red": 0,
+      "green": 0,
+      "blue": 128
+    },
+    {
+      "red": 0,
+      "green": 0,
+      "blue": 255
+    },
+    {
+      "red": 40,
+      "green": 104,
+      "blue": 255
+    },
+    {
+      "red": 8,
+      "green": 0,
+      "blue": 44
+    },
+    {
+      "red": 32,
+      "green": 0,
+      "blue": 128
+    },
+    {
+      "red": 40,
+      "green": 0,
+      "blue": 255
+    },
+    {
+      "red": 48,
+      "green": 88,
+      "blue": 255
+    },
+    {
+      "red": 24,
+      "green": 0,
+      "blue": 40
+    },
+    {
+      "red": 72,
+      "green": 0,
+      "blue": 128
+    },
+    {
+      "red": 104,
+      "green": 0,
+      "blue": 255
+    },
+    {
+      "red": 88,
+      "green": 80,
+      "blue": 255
+    },
+    {
+      "red": 32,
+      "green": 0,
+      "blue": 48
+    },
+    {
+      "red": 96,
+      "green": 0,
+      "blue": 96
+    },
+    {
+      "red": 255,
+      "green": 0,
+      "blue": 128
+    },
+    {
+      "red": 255,
+      "green": 64,
+      "blue": 160
+    },
+    {
+      "red": 32,
+      "green": 0,
+      "blue": 16
+    },
+    {
+      "red": 90,
+      "green": 0,
+      "blue": 48
+    },
+    {
+      "red": 255,
+      "green": 0,
+      "blue": 64
+    },
+    {
+      "red": 255,
+      "green": 40,
+      "blue": 104
+    },
+    {
+      "red": 40,
+      "green": 0,
+      "blue": 8
+    },
+    {
+      "red": 112,
+      "green": 0,
+      "blue": 16
+    },
+    {
+      "red": 255,
+      "green": 0,
+      "blue": 16
+    },
+    {
+      "red": 255,
+      "green": 48,
+      "blue": 56
+    },
+    {
+      "red": 40,
+      "green": 40,
+      "blue": 40
+    },
+    {
+      "red": 96,
+      "green": 96,
+      "blue": 96
+    },
+    {
+      "red": 226,
+      "green": 226,
+      "blue": 226
+    },
+    {
+      "red": 160,
+      "green": 255,
+      "blue": 255
+    }
+  ],
+
+  "input": {
+    "interface": 4,
+    "endpoint": "0x84",
+    "firstByte": "0x01",
+
+    "buttons": {
+      "navPush": {
+        "addr": 2,
+        "bitmask": "0x08"
+      },
+      "f1Midi": {
+        "addr": 3,
+        "bitmask": "0x80"
+      },
+      "f2Instance": {
+        "addr": 3,
+        "bitmask": "0x40"
+      },
+      "f3": {
+        "addr": 3,
+        "bitmask": "0x20"
+      },
+      "controlPin": {
+        "addr": 3,
+        "bitmask": "0x10"
+      },
+      "nav": {
+        "addr": 3,
+        "bitmask": "0x08"
+      },
+      "arrowLeft": {
+        "addr": 3,
+        "bitmask": "0x04"
+      },
+      "arrowRight": {
+        "addr": 3,
+        "bitmask": "0x02"
+      },
+      "main": {
+        "addr": 3,
+        "bitmask": "0x01"
+      },
+
+      "groupStepMode": {
+        "addr": 2,
+        "bitmask": "0x80"
+      },
+      "browseModules": {
+        "addr": 2,
+        "bitmask": "0x40"
+      },
+      "samplingSave": {
+        "addr": 2,
+        "bitmask": "0x20"
+      },
+      "noteRepeatTap": {
+        "addr": 2,
+        "bitmask": "0x10"
+      },
+
+      "restart": {
+        "addr": 1,
+        "bitmask": "0x80"
+      },
+      "arrowLeftStep": {
+        "addr": 1,
+        "bitmask": "0x40"
+      },
+      "arrowRightStep": {
+        "addr": 1,
+        "bitmask": "0x20"
+      },
+      "grid": {
+        "addr": 1,
+        "bitmask": "0x10"
+      },
+      "playMetronome": {
+        "addr": 1,
+        "bitmask": "0x08"
+      },
+      "recCountInReplace": {
+        "addr": 1,
+        "bitmask": "0x04"
+      },
+      "eraseReplace": {
+        "addr": 1,
+        "bitmask": "0x02"
+      },
+      "shift": {
+        "addr": 1,
+        "bitmask": "0x01"
+      },
+
+      "scene": {
+        "addr": 4,
+        "bitmask": "0x80"
+      },
+      "pattern": {
+        "addr": 4,
+        "bitmask": "0x40"
+      },
+      "padModeKeyboard": {
+        "addr": 4,
+        "bitmask": "0x20"
+      },
+      "view": {
+        "addr": 4,
+        "bitmask": "0x10"
+      },
+      "duplicate": {
+        "addr": 4,
+        "bitmask": "0x08"
+      },
+      "selectEvents": {
+        "addr": 4,
+        "bitmask": "0x04"
+      },
+      "solo": {
+        "addr": 4,
+        "bitmask": "0x02"
+      },
+      "muteChoke": {
+        "addr": 4,
+        "bitmask": "0x01"
+      }
+    },
+
+    "steppers": {
+      "stepper": {
+        "addr": 5
+      }
+    }
+
+  },
+
+  "input2": {
+    "interface": 4,
+    "endpoint": "0x84",
+    "firstByte": "0x20",
+
+    "pads": {
+      "dataSize": 64,
+      "padCount": 16,
+      "prefix": "p"
+    }
+  },
+
+  "output": {
+    "length": 123,
+    "firstByte": "0x80",
+    "leds": {
+      "f1Midi": {
+        "addr": 1
+      },
+      "f2Instance": {
+        "addr": 2
+      },
+      "f3": {
+        "addr": 3
+      },
+      "controlPin": {
+        "addr": 4
+      },
+      "nav": {
+        "addr": 5
+      },
+      "arrowLeft": {
+        "addr": 6
+      },
+      "arrowRight": {
+        "addr": 7
+      },
+      "main": {
+        "addr": 8
+      },
+      "browseModules": {
+        "addr": 12
+      },
+      "samplingSave": {
+        "addr": 13
+      },
+      "noteRepeatTap": {
+        "addr": 14
+      },
+      "restart": {
+        "addr": 15
+      },
+      "arrowLeftStep": {
+        "addr": 16
+      },
+      "arrowRightStep": {
+        "addr": 17
+      },
+      "grid": {
+        "addr": 18
+      },
+      "playMetronome": {
+        "addr": 19,
+        "color": "green"
+      },
+      "recCountInReplace": {
+        "addr": 20,
+        "color": "red"
+      },
+      "eraseReplace": {
+        "addr": 21
+      },
+      "shift": {
+        "addr": 22
+      },
+
+      "scene": {
+        "addr": 23
+      },
+      "pattern": {
+        "addr": 24
+      },
+      "padModeKeyboard": {
+        "addr": 25
+      },
+      "view": {
+        "addr": 26
+      },
+      "duplicate": {
+        "addr": 27
+      },
+      "selectEvents": {
+        "addr": 28
+      },
+      "solo": {
+        "addr": 29
+      },
+      "muteChoke": {
+        "addr": 30
+      }
+    },
+    "rgb_leds": {
+      "groupStepMode": {
+        "rAddr": 9,
+        "gAddr": 10,
+        "bAddr": 11
+      }
+    }
+  },
+
+  "output2": {
+    "length": 81,
+    "firstByte": "0x80",
+    "endpoint": "0x01",
+    "rgb_leds": {
+      "p1": {
+        "rAddr": 31,
+        "gAddr": 32,
+        "bAddr": 33
+      },
+      "p2": {
+        "rAddr": 34,
+        "gAddr": 35,
+        "bAddr": 36
+      },
+      "p3": {
+        "rAddr": 37,
+        "gAddr": 38,
+        "bAddr": 39
+      },
+      "p4": {
+        "rAddr": 40,
+        "gAddr": 41,
+        "bAddr": 42
+      },
+      "p5": {
+        "rAddr": 43,
+        "gAddr": 44,
+        "bAddr": 45
+      },
+      "p6": {
+        "rAddr": 46,
+        "gAddr": 47,
+        "bAddr": 48
+      },
+      "p7": {
+        "rAddr": 49,
+        "gAddr": 50,
+        "bAddr": 51
+      },
+      "p8": {
+        "rAddr": 52,
+        "gAddr": 53,
+        "bAddr": 54
+      },
+      "p9": {
+        "rAddr": 55,
+        "gAddr": 56,
+        "bAddr": 57
+      },
+      "p10": {
+        "rAddr": 58,
+        "gAddr": 59,
+        "bAddr": 60
+      },
+      "p11": {
+        "rAddr": 61,
+        "gAddr": 62,
+        "bAddr": 63
+      },
+      "p12": {
+        "rAddr": 64,
+        "gAddr": 65,
+        "bAddr": 66
+      },
+      "p13": {
+        "rAddr": 67,
+        "gAddr": 68,
+        "bAddr": 69
+      },
+      "p14": {
+        "rAddr": 70,
+        "gAddr": 71,
+        "bAddr": 72
+      },
+      "p15": {
+        "rAddr": 73,
+        "gAddr": 74,
+        "bAddr": 75
+      },
+      "p16": {
+        "rAddr": 76,
+        "gAddr": 77,
+        "bAddr": 78
+      }
+    }
+  },
+
+  "oled_displays": {
+    "mainScreen": {
+      "length": 265,
+      "firstByte": "0xe0",
+      "width": 128,
+      "height": 64
+    }
+  }
+}

@@ -30,6 +30,10 @@ export class Button implements Widget {
       this.controller.emit(
         `${this.name}:${this.pressed ? "pressed" : "released"}`
       );
+      this.controller.emit(
+        `button:${this.pressed ? "pressed" : "released"}`,
+        this.name
+      );
     }
   }
 }

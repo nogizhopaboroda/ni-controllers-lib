@@ -20,6 +20,7 @@
   "devDependencies": {
     "concurrently": "^5.2.0",
     "jpeg-js": "^0.4.0",
+    "ndb": "^1.1.5",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
@@ -36,7 +37,9 @@
     "watch": "tsc --watch",
     "prepack": "npm run clean && npm run build",
     "example:maschinemk3:node": "ts-node --transpile-only examples/maschine_mk3/node.ts",
-    "example:maschinemk3:web": "parcel examples/maschine_mk3/web.html"
+    "example:maschinemk3:web": "parcel examples/maschine_mk3/web.html",
+    "example:maschinemk2mikro:node": "ts-node --transpile-only examples/maschine_mk2_mikro/node.ts",
+    "example:maschinemk2mikro:web": "parcel examples/maschine_mk2_mikro/web.html"
   },
   "repository": {
     "type": "git",

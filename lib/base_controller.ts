@@ -5,11 +5,16 @@ import {
   PacketizedPads,
   PacketizedPadsConfig,
 } from "./components/input/packetized_pads";
+import { Pads, PadsConfig } from "./components/input/pads";
 import { Slider, SliderConfig } from "./components/input/slider";
 import { StepWheel, StepWheelConfig } from "./components/input/stepwheel";
 import { TouchStrip, TouchStripConfig } from "./components/input/touch_strip";
 import { Widget } from "./components/input/Widget";
 import { LCDDigit, LcdDigitConfig } from "./components/output/lcd_digit";
+import {
+  OLEDDisplay,
+  OLEDDisplayConfig,
+} from "./components/output/oled_display";
 import { LED, LedConfig } from "./components/output/led";
 import {
   LED_Indexed,
@@ -36,6 +41,7 @@ interface InputConf {
   sliders?: Record<string, SliderConfig>;
   touchStrips?: Record<string, TouchStripConfig>;
   packetized_pads?: PacketizedPadsConfig;
+  pads?: PadsConfig;
 }
 
 interface OutputConf {
@@ -46,6 +52,8 @@ interface OutputConf {
   indexed_leds?: Record<string, LedIndexedConfig>;
   lcd?: Record<string, LcdDigitConfig>;
 }
+
+interface OLEDDisplaysConfig extends Record<string, OLEDDisplayConfig> {}
 
 interface OutputInfo {
   dirty: boolean;
@@ -73,7 +81,7 @@ function normInt(val: string | number) {
 }
 
 export class BaseController extends EventEmitter {
-  readonly buttons: Record<string, Button | PacketizedPads> = {};
+  readonly buttons: Record<string, Button | PacketizedPads | Pads> = {};
   readonly knobs: Record<string, unknown> = {};
   readonly sliders: Record<string, Slider> = {};
   readonly touchStrips: Record<string, TouchStrip> = {};
@@ -81,6 +89,7 @@ export class BaseController extends EventEmitter {
   readonly rgb_leds: Record<string, LED_RGB> = {};
   readonly indexed_leds: Record<string, LED_Indexed> = {};
   readonly lcd: Record<string, LCDDigit> = {};
+  readonly oled_displays: Record<string, OLEDDisplay> = {};
 
   stepper: StepWheel | null = null;
 
@@ -109,6 +118,7 @@ export class BaseController extends EventEmitter {
       output: OutputConf;
       output2?: OutputConf;
       displays?: LcdDisplaysConfig;
+      oled_displays?: OLEDDisplaysConfig;
     },
     readonly createHid: HidAdapterFactory,
     readonly createUsb: UsbAdapterFactory
@@ -156,7 +166,18 @@ export class BaseController extends EventEmitter {
       if (key === "displays") {
         let displaysConfig = this.config[key];
         if (displaysConfig != null) {
-          await this.processDisplayBlock(usbDevice, displaysConfig);
+          try {
+            await this.processDisplayBlock(usbDevice, displaysConfig);
+          } catch (e) {
+            console.log(`could not preocess display block`, e);
+          }
+        }
+      }
+
+      if (key === "oled_displays") {
+        let oledDisplaysConfig = this.config[key];
+        if (oledDisplaysConfig != null) {
+          this.processOledDisplaysBlock(oledDisplaysConfig, hidDevice);
         }
       }
     }
@@ -232,6 +253,15 @@ export class BaseController extends EventEmitter {
       }
     }
 
+    if (iconf.pads) {
+      const p = new Pads(iconf.pads, this, normInt);
+      widgets.push(p);
+      for (let iPad = 1; iPad <= p.padCount; iPad++) {
+        const name = p.prefix + iPad;
+        this.buttons[name] = p;
+      }
+    }
+
     hidDevice.onData(this.parseInput.bind(this));
   }
 
@@ -266,7 +296,7 @@ export class BaseController extends EventEmitter {
         if (!oinfo.dirty) {
           oinfo.dirty = true;
           if (!oinfo.activeWrite) {
-            Promise.resolve().then(() => {
+            return Promise.resolve().then(() => {
               oinfo.sendOutput().catch((ex) => {
                 console.log(`failed write of ${name}`, ex);
                 console.log(`outPacket was: ${outPacket.join("   ")}`);
@@ -333,6 +363,20 @@ export class BaseController extends EventEmitter {
           oinfo.invalidateOutput
         );
       }
+    }
+  }
+
+  async processOledDisplaysBlock(
+    config: OLEDDisplaysConfig,
+    hidDevice: HidAdapter
+  ) {
+    const sendScreenData = async (packets: Uint8Array[]) => {
+      for (let packet of packets) {
+        await hidDevice.write(Array.from(packet));
+      }
+    };
+    for (let key in config) {
+      this.oled_displays[key] = new OLEDDisplay(config[key], sendScreenData);
     }
   }
 

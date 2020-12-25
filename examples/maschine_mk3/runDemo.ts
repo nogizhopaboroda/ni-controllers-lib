@@ -5,6 +5,35 @@ import { MaschineMk3 } from "../../lib/maschine_mk3";
 export const runDemo = (mk3: MaschineMk3, jpegData: BufferLike) =>
   mk3.init().then(() => {
     // ## Group Pads: Display colors with transient "flash" on press.
+
+    mk3.on('p:pressed', (index, pressure) => {
+      console.log(`pad #${index} pressed. pressure: ${pressure}`);
+    });
+
+    mk3.on('p:pressure', (index, pressure) => {
+      console.log(`pad #${index} pressure: ${pressure}`);
+    });
+
+    mk3.on('p:pressed', (index) => {
+      console.log(`pad #${index} released`);
+    });
+
+    mk3.on('navUp:pressed', (index) => {
+      console.log(`navUp pressed`);
+    });
+
+    mk3.on('navDown:pressed', (index) => {
+      console.log(`navDown pressed`);
+    });
+
+    mk3.on('navLeft:pressed', (index) => {
+      console.log(`navLeft pressed`);
+    });
+
+    mk3.on('navRight:pressed', (index) => {
+      console.log(`navRight pressed`);
+    });
+
     for (let i = 1; i <= 8; i++) {
       const li = i;
       const li0 = li - 1;
@@ -12,9 +41,11 @@ export const runDemo = (mk3: MaschineMk3, jpegData: BufferLike) =>
       const led = mk3.indexed_leds[name];
       led.setColorByNumberHelper(li0, true, false);
       mk3.on(`${name}:pressed`, () => {
+        console.log(`${name} pressed`);
         led.setColorByNumberHelper(li0, true, true);
       });
       mk3.on(`${name}:released`, () => {
+        console.log(`${name} released`);
         led.setColorByNumberHelper(li0, true, false);
       });
     }
@@ -39,7 +70,9 @@ export const runDemo = (mk3: MaschineMk3, jpegData: BufferLike) =>
 
     // ## Knobs: On touch, override the pads and do RGB/spread for each
     for (let i = 1; i <= 8; i++) {
-      mk3.on(`knobTouch${i}`, (touched) => {});
+      mk3.on(`knobTouch${i}`, (touched) => {
+        console.log(`knob #${i} ${touched}`);
+      });
     }
 
     mk3.on(`stepper:step`, ({ direction }) => {
