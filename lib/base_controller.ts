@@ -156,7 +156,11 @@ export class BaseController extends EventEmitter {
       if (key === "displays") {
         let displaysConfig = this.config[key];
         if (displaysConfig != null) {
-          await this.processDisplayBlock(usbDevice, displaysConfig);
+          try {
+            await this.processDisplayBlock(usbDevice, displaysConfig);
+          } catch(e){
+            console.log(`could not preocess display block`, e);
+          }
         }
       }
     }
