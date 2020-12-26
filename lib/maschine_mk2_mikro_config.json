@@ -759,10 +759,6 @@
 
     "pads": {
       "dataSize": 64,
-
-      "start": "0x01",
-      "repeated": 21,
-      "length": 3,
       "padCount": 16,
       "prefix": "p"
     }

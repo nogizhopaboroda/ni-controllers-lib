@@ -46,10 +46,7 @@ export interface PadsConfig {
  * auto-listens to each button?)
  */
 export class Pads implements Widget {
-  readonly startOffset: number;
   readonly dataSize: number;
-  readonly repeatCount: number;
-  readonly eachLength: number;
   readonly padCount: number;
   readonly prefix: string;
   readonly controller: EventEmitter;
@@ -60,10 +57,7 @@ export class Pads implements Widget {
     controller: EventEmitter,
     normInt: (str: string | number) => number
   ) {
-    this.startOffset = normInt(config.start);
     this.dataSize = normInt(config.dataSize);
-    this.repeatCount = normInt(config.repeated);
-    this.eachLength = normInt(config.length);
     this.padCount = normInt(config.padCount);
     this.prefix = config.prefix;
     this.controller = controller;
