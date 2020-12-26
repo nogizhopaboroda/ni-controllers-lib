@@ -12,7 +12,7 @@ export const runDemo = (mk2micro: MaschineMk2Mikro) =>
       console.log(`pad #${index} pressure: ${pressure}`);
     });
 
-    mk2micro.on('p:pressed', (index) => {
+    mk2micro.on('p:released', (index) => {
       console.log(`pad #${index} released`);
     });
 

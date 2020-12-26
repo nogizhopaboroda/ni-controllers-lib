@@ -5,6 +5,7 @@ import {
   PacketizedPads,
   PacketizedPadsConfig,
 } from "./components/input/packetized_pads";
+import { Pads, PadsConfig } from "./components/input/pads";
 import { Slider, SliderConfig } from "./components/input/slider";
 import { StepWheel, StepWheelConfig } from "./components/input/stepwheel";
 import { TouchStrip, TouchStripConfig } from "./components/input/touch_strip";
@@ -36,6 +37,7 @@ interface InputConf {
   sliders?: Record<string, SliderConfig>;
   touchStrips?: Record<string, TouchStripConfig>;
   packetized_pads?: PacketizedPadsConfig;
+  pads?: PadsConfig;
 }
 
 interface OutputConf {
@@ -158,7 +160,7 @@ export class BaseController extends EventEmitter {
         if (displaysConfig != null) {
           try {
             await this.processDisplayBlock(usbDevice, displaysConfig);
-          } catch(e){
+          } catch (e) {
             console.log(`could not preocess display block`, e);
           }
         }
@@ -229,6 +231,15 @@ export class BaseController extends EventEmitter {
 
     if (iconf.packetized_pads) {
       const p = new PacketizedPads(iconf.packetized_pads, this, normInt);
+      widgets.push(p);
+      for (let iPad = 1; iPad <= p.padCount; iPad++) {
+        const name = p.prefix + iPad;
+        this.buttons[name] = p;
+      }
+    }
+
+    if (iconf.pads) {
+      const p = new Pads(iconf.pads, this, normInt);
       widgets.push(p);
       for (let iPad = 1; iPad <= p.padCount; iPad++) {
         const name = p.prefix + iPad;

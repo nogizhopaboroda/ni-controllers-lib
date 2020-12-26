@@ -371,7 +371,7 @@
 
   "input": {
     "interface": 4,
-    "endpoint": "0x83",
+    "endpoint": "0x84",
     "firstByte": "0x01",
 
     "buttons": {
@@ -754,10 +754,12 @@
 
   "input2": {
     "interface": 4,
-    "endpoint": "0x83",
-    "firstByte": "0x02",
+    "endpoint": "0x84",
+    "firstByte": "0x20",
 
-    "packetized_pads": {
+    "pads": {
+      "dataSize": 64,
+
       "start": "0x01",
       "repeated": 21,
       "length": 3,
