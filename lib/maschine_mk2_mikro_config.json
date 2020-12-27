@@ -765,7 +765,7 @@
   },
 
   "output": {
-    "length": 63,
+    "length": 123,
     "firstByte": "0x80",
     "leds": {
       "channelMidi": {
@@ -964,132 +964,89 @@
   },
 
   "output2": {
-    "length": 42,
-    "firstByte": "0x81",
-    "indexed_leds": {
-      "ts1": {
-        "addr": 1
-      },
-      "ts2": {
-        "addr": 2
-      },
-      "ts3": {
-        "addr": 3
-      },
-      "ts4": {
-        "addr": 4
-      },
-      "ts5": {
-        "addr": 5
-      },
-      "ts6": {
-        "addr": 6
-      },
-      "ts7": {
-        "addr": 7
-      },
-      "ts8": {
-        "addr": 8
-      },
-      "ts9": {
-        "addr": 9
-      },
-      "ts10": {
-        "addr": 10
-      },
-      "ts11": {
-        "addr": 11
-      },
-      "ts12": {
-        "addr": 12
-      },
-      "ts13": {
-        "addr": 13
-      },
-      "ts14": {
-        "addr": 14
-      },
-      "ts15": {
-        "addr": 15
-      },
-      "ts16": {
-        "addr": 16
-      },
-      "ts17": {
-        "addr": 17
-      },
-      "ts18": {
-        "addr": 18
-      },
-      "ts19": {
-        "addr": 19
-      },
-      "ts20": {
-        "addr": 20
-      },
-      "ts21": {
-        "addr": 21
-      },
-      "ts22": {
-        "addr": 22
-      },
-      "ts23": {
-        "addr": 23
-      },
-      "ts24": {
-        "addr": 24
-      },
-      "ts25": {
-        "addr": 25
-      },
-
+    "length": 81,
+    "firstByte": "0x80",
+    "endpoint": "0x01",
+    "rgb_leds": {
       "p1": {
-        "addr": 26
+        "rAddr": 31,
+        "gAddr": 32,
+        "bAddr": 33
       },
       "p2": {
-        "addr": 27
+        "rAddr": 34,
+        "gAddr": 35,
+        "bAddr": 36
       },
       "p3": {
-        "addr": 28
+        "rAddr": 37,
+        "gAddr": 38,
+        "bAddr": 39
       },
       "p4": {
-        "addr": 29
+        "rAddr": 40,
+        "gAddr": 41,
+        "bAddr": 42
       },
       "p5": {
-        "addr": 30
+        "rAddr": 43,
+        "gAddr": 44,
+        "bAddr": 45
       },
       "p6": {
-        "addr": 31
+        "rAddr": 46,
+        "gAddr": 47,
+        "bAddr": 48
       },
       "p7": {
-        "addr": 32
+        "rAddr": 49,
+        "gAddr": 50,
+        "bAddr": 51
       },
       "p8": {
-        "addr": 33
+        "rAddr": 52,
+        "gAddr": 53,
+        "bAddr": 54
       },
       "p9": {
-        "addr": 34
+        "rAddr": 55,
+        "gAddr": 56,
+        "bAddr": 57
       },
       "p10": {
-        "addr": 35
+        "rAddr": 58,
+        "gAddr": 59,
+        "bAddr": 60
       },
       "p11": {
-        "addr": 36
+        "rAddr": 61,
+        "gAddr": 62,
+        "bAddr": 63
       },
       "p12": {
-        "addr": 37
+        "rAddr": 64,
+        "gAddr": 65,
+        "bAddr": 66
       },
       "p13": {
-        "addr": 38
+        "rAddr": 67,
+        "gAddr": 68,
+        "bAddr": 69
       },
       "p14": {
-        "addr": 39
+        "rAddr": 70,
+        "gAddr": 71,
+        "bAddr": 72
       },
       "p15": {
-        "addr": 40
+        "rAddr": 73,
+        "gAddr": 74,
+        "bAddr": 75
       },
       "p16": {
-        "addr": 41
+        "rAddr": 76,
+        "gAddr": 77,
+        "bAddr": 78
       }
     }
   },
