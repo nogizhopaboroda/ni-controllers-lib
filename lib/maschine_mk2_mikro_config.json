@@ -768,197 +768,96 @@
     "length": 123,
     "firstByte": "0x80",
     "leds": {
-      "channelMidi": {
+      "f1Midi": {
         "addr": 1
       },
-      "pluginInstance": {
+      "f2Instance": {
         "addr": 2
       },
-      "arranger": {
+      "f3": {
         "addr": 3
       },
-      "browserPlugin": {
+      "controlPin": {
         "addr": 4
       },
-
+      "nav": {
+        "addr": 5
+      },
       "arrowLeft": {
-        "addr": 7
-      },
-      "arrowRight": {
-        "addr": 8
-      },
-      "fileSave": {
-        "addr": 9
-      },
-      "settings": {
-        "addr": 10
-      },
-      "auto": {
-        "addr": 11
-      },
-      "macroSet": {
-        "addr": 12
-      },
-      "d1": {
-        "addr": 13
-      },
-      "d2": {
-        "addr": 14
-      },
-      "d3": {
-        "addr": 15
-      },
-      "d4": {
-        "addr": 16
-      },
-      "d5": {
-        "addr": 17
-      },
-      "d6": {
-        "addr": 18
-      },
-      "d7": {
-        "addr": 19
-      },
-      "d8": {
-        "addr": 20
-      },
-      "volume": {
-        "addr": 21
-      },
-      "swing": {
-        "addr": 22
-      },
-      "noteRepeatArp": {
-        "addr": 23
-      },
-      "tempo": {
-        "addr": 24
-      },
-      "lock": {
-        "addr": 25
-      },
-      "pitch": {
-        "addr": 26
-      },
-      "mod": {
-        "addr": 27
-      },
-      "performFxSelect": {
-        "addr": 28
-      },
-      "notes": {
-        "addr": 29
-      },
-
-      "restartLoop": {
-        "addr": 38
-      },
-      "eraseReplace": {
-        "addr": 39
-      },
-      "tapMetro": {
-        "addr": 40
-      },
-      "followGrid": {
-        "addr": 41
-      },
-      "play": {
-        "addr": 42,
-        "color": "green"
-      },
-      "recCountIn": {
-        "addr": 43,
-        "color": "red"
-      },
-      "stop": {
-        "addr": 44
-      },
-      "shift": {
-        "addr": 45
-      },
-      "fixedVel": {
-        "addr": 46
-      },
-      "padMode": {
-        "addr": 47
-      },
-      "keyboard": {
-        "addr": 48
-      },
-      "chords": {
-        "addr": 49
-      },
-      "step": {
-        "addr": 50
-      },
-      "scene": {
-        "addr": 51
-      },
-      "pattern": {
-        "addr": 52
-      },
-      "events": {
-        "addr": 53
-      },
-      "variationNavigate": {
-        "addr": 54
-      },
-      "duplicateDouble": {
-        "addr": 55
-      },
-      "select": {
-        "addr": 56
-      },
-      "solo": {
-        "addr": 57
-      },
-      "muteChoke": {
-        "addr": 58
-      }
-    },
-
-    "indexed_leds": {
-      "sampler": {
         "addr": 6
       },
+      "arrowRight": {
+        "addr": 7
+      },
+      "main": {
+        "addr": 8
+      },
+      "browseModules": {
+        "addr": 12
+      },
+      "samplingSave": {
+        "addr": 13
+      },
+      "noteRepeatTap": {
+        "addr": 14
+      },
+      "restart": {
+        "addr": 15
+      },
+      "arrowLeftStep": {
+        "addr": 16
+      },
+      "arrowRightStep": {
+        "addr": 17
+      },
+      "grid": {
+        "addr": 18
+      },
+      "playMetronome": {
+        "addr": 19,
+        "color": "green"
+      },
+      "recCountInReplace": {
+        "addr": 20,
+        "color": "red"
+      },
+      "eraseReplace": {
+        "addr": 21
+      },
+      "shift": {
+        "addr": 22
+      },
 
-      "g1": {
+      "scene": {
+        "addr": 23
+      },
+      "pattern": {
+        "addr": 24
+      },
+      "padModeKeyboard": {
+        "addr": 25
+      },
+      "view": {
+        "addr": 26
+      },
+      "duplicate": {
+        "addr": 27
+      },
+      "selectEvents": {
+        "addr": 28
+      },
+      "solo": {
+        "addr": 29
+      },
+      "muteChoke": {
         "addr": 30
-      },
-      "g2": {
-        "addr": 31
-      },
-      "g3": {
-        "addr": 32
-      },
-      "g4": {
-        "addr": 33
-      },
-      "g5": {
-        "addr": 34
-      },
-      "g6": {
-        "addr": 35
-      },
-      "g7": {
-        "addr": 36
-      },
-      "g8": {
-        "addr": 37
-      },
-
-      "navUp": {
-        "addr": 59
-      },
-      "navLeft": {
-        "addr": 60
-      },
-      "navRight": {
-        "addr": 61
-      },
-      "navDown": {
-        "addr": 62
+      }
+    },
+    "rgb_leds": {
+      "groupStepMode": {
+        "rAddr": 9,
+        "gAddr": 10,
+        "bAddr": 11
       }
     }
   },
