@@ -376,380 +376,132 @@
 
     "buttons": {
       "navPush": {
-        "addr": 1,
-        "bitmask": "0x01"
-      },
-      "pedalConnected": {
-        "addr": 1,
-        "bitmask": "0x02"
-      },
-      "navUp": {
-        "addr": 1,
-        "bitmask": "0x04"
-      },
-      "navRight": {
-        "addr": 1,
+        "addr": 2,
         "bitmask": "0x08"
       },
-      "navDown": {
+      "f1Midi": {
+        "addr": 3,
+        "bitmask": "0x80"
+      },
+      "f2Instance": {
+        "addr": 3,
+        "bitmask": "0x40"
+      },
+      "f3": {
+        "addr": 3,
+        "bitmask": "0x20"
+      },
+      "controlPin": {
+        "addr": 3,
+        "bitmask": "0x10"
+      },
+      "nav": {
+        "addr": 3,
+        "bitmask": "0x08"
+      },
+      "arrowLeft": {
+        "addr": 3,
+        "bitmask": "0x04"
+      },
+      "arrowRight": {
+        "addr": 3,
+        "bitmask": "0x02"
+      },
+      "main": {
+        "addr": 3,
+        "bitmask": "0x01"
+      },
+
+      "groupStepMode": {
+        "addr": 2,
+        "bitmask": "0x80"
+      },
+      "browseModules": {
+        "addr": 2,
+        "bitmask": "0x40"
+      },
+      "samplingSave": {
+        "addr": 2,
+        "bitmask": "0x20"
+      },
+      "noteRepeatTap": {
+        "addr": 2,
+        "bitmask": "0x10"
+      },
+
+      "restart": {
+        "addr": 1,
+        "bitmask": "0x80"
+      },
+      "arrowLeftStep": {
+        "addr": 1,
+        "bitmask": "0x40"
+      },
+      "arrowRightStep": {
+        "addr": 1,
+        "bitmask": "0x20"
+      },
+      "grid": {
         "addr": 1,
         "bitmask": "0x10"
       },
-      "navLeft": {
+      "playMetronome": {
         "addr": 1,
-        "bitmask": "0x20"
+        "bitmask": "0x08"
+      },
+      "recCountInReplace": {
+        "addr": 1,
+        "bitmask": "0x04"
+      },
+      "eraseReplace": {
+        "addr": 1,
+        "bitmask": "0x02"
       },
       "shift": {
         "addr": 1,
-        "bitmask": "0x40"
-      },
-      "d8": {
-        "addr": 1,
-        "bitmask": "0x80"
-      },
-
-      "g1": {
-        "addr": 2,
         "bitmask": "0x01"
       },
-      "g2": {
-        "addr": 2,
-        "bitmask": "0x02"
-      },
-      "g3": {
-        "addr": 2,
-        "bitmask": "0x04"
-      },
-      "g4": {
-        "addr": 2,
-        "bitmask": "0x08"
-      },
-      "g5": {
-        "addr": 2,
-        "bitmask": "0x10"
-      },
-      "g6": {
-        "addr": 2,
-        "bitmask": "0x20"
-      },
-      "g7": {
-        "addr": 2,
-        "bitmask": "0x40"
-      },
-      "g8": {
-        "addr": 2,
-        "bitmask": "0x80"
-      },
 
-      "notes": {
-        "addr": 3,
-        "bitmask": "0x01"
-      },
-      "volume": {
-        "addr": 3,
-        "bitmask": "0x02"
-      },
-      "swing": {
-        "addr": 3,
-        "bitmask": "0x04"
-      },
-      "tempo": {
-        "addr": 3,
-        "bitmask": "0x08"
-      },
-      "noteRepeatArp": {
-        "addr": 3,
-        "bitmask": "0x10"
-      },
-      "lock": {
-        "addr": 3,
-        "bitmask": "0x20"
-      },
-
-      "padMode": {
-        "addr": 4,
-        "bitmask": "0x01"
-      },
-      "keyboard": {
-        "addr": 4,
-        "bitmask": "0x02"
-      },
-      "chords": {
-        "addr": 4,
-        "bitmask": "0x04"
-      },
-      "step": {
-        "addr": 4,
-        "bitmask": "0x08"
-      },
-      "fixedVel": {
-        "addr": 4,
-        "bitmask": "0x10"
-      },
       "scene": {
         "addr": 4,
-        "bitmask": "0x20"
+        "bitmask": "0x80"
       },
       "pattern": {
         "addr": 4,
         "bitmask": "0x40"
       },
-      "events": {
+      "padModeKeyboard": {
         "addr": 4,
-        "bitmask": "0x80"
+        "bitmask": "0x20"
       },
-
-      "microphoneConnected": {
-        "addr": 5,
-        "bitmask": "0x01"
+      "view": {
+        "addr": 4,
+        "bitmask": "0x10"
       },
-      "variationNavigate": {
-        "addr": 5,
-        "bitmask": "0x02"
-      },
-      "duplicateDouble": {
-        "addr": 5,
-        "bitmask": "0x04"
-      },
-      "select": {
-        "addr": 5,
+      "duplicate": {
+        "addr": 4,
         "bitmask": "0x08"
+      },
+      "selectEvents": {
+        "addr": 4,
+        "bitmask": "0x04"
       },
       "solo": {
-        "addr": 5,
-        "bitmask": "0x10"
+        "addr": 4,
+        "bitmask": "0x02"
       },
       "muteChoke": {
-        "addr": 5,
-        "bitmask": "0x20"
-      },
-      "pitch": {
-        "addr": 5,
-        "bitmask": "0x40"
-      },
-      "mod": {
-        "addr": 5,
-        "bitmask": "0x80"
-      },
-
-      "performFxSelect": {
-        "addr": 6,
+        "addr": 4,
         "bitmask": "0x01"
-      },
-      "restartLoop": {
-        "addr": 6,
-        "bitmask": "0x02"
-      },
-      "eraseReplace": {
-        "addr": 6,
-        "bitmask": "0x04"
-      },
-      "tapMetro": {
-        "addr": 6,
-        "bitmask": "0x08"
-      },
-      "followGrid": {
-        "addr": 6,
-        "bitmask": "0x10"
-      },
-      "play": {
-        "addr": 6,
-        "bitmask": "0x20"
-      },
-      "recCountIn": {
-        "addr": 6,
-        "bitmask": "0x40"
-      },
-      "stop": {
-        "addr": 6,
-        "bitmask": "0x80"
-      },
-
-      "macroSet": {
-        "addr": 7,
-        "bitmask": "0x01"
-      },
-      "settings": {
-        "addr": 7,
-        "bitmask": "0x02"
-      },
-      "arrowRight": {
-        "addr": 7,
-        "bitmask": "0x04"
-      },
-      "sampling": {
-        "addr": 7,
-        "bitmask": "0x08"
-      },
-      "mixer": {
-        "addr": 7,
-        "bitmask": "0x10"
-      },
-      "plugin": {
-        "addr": 7,
-        "bitmask": "0x20"
-      },
-
-      "channelMidi": {
-        "addr": 8,
-        "bitmask": "0x01"
-      },
-      "arranger": {
-        "addr": 8,
-        "bitmask": "0x02"
-      },
-      "browserPlugin": {
-        "addr": 8,
-        "bitmask": "0x04"
-      },
-      "arrowLeft": {
-        "addr": 8,
-        "bitmask": "0x08"
-      },
-      "fileSave": {
-        "addr": 8,
-        "bitmask": "0x10"
-      },
-      "auto": {
-        "addr": 8,
-        "bitmask": "0x20"
-      },
-
-      "d1": {
-        "addr": 9,
-        "bitmask": "0x01"
-      },
-      "d2": {
-        "addr": 9,
-        "bitmask": "0x02"
-      },
-      "d3": {
-        "addr": 9,
-        "bitmask": "0x04"
-      },
-      "d4": {
-        "addr": 9,
-        "bitmask": "0x08"
-      },
-      "d5": {
-        "addr": 9,
-        "bitmask": "0x10"
-      },
-      "d6": {
-        "addr": 9,
-        "bitmask": "0x20"
-      },
-      "d7": {
-        "addr": 9,
-        "bitmask": "0x40"
-      },
-      "navTouch": {
-        "addr": 9,
-        "bitmask": "0x80"
-      },
-
-      "knobTouch8": {
-        "addr": 10,
-        "bitmask": "0x01"
-      },
-      "knobTouch7": {
-        "addr": 10,
-        "bitmask": "0x02"
-      },
-      "knobTouch6": {
-        "addr": 10,
-        "bitmask": "0x04"
-      },
-      "knobTouch5": {
-        "addr": 10,
-        "bitmask": "0x08"
-      },
-      "knobTouch4": {
-        "addr": 10,
-        "bitmask": "0x10"
-      },
-      "knobTouch3": {
-        "addr": 10,
-        "bitmask": "0x20"
-      },
-      "knobTouch2": {
-        "addr": 10,
-        "bitmask": "0x40"
-      },
-      "knobTouch1": {
-        "addr": 10,
-        "bitmask": "0x80"
       }
     },
 
     "steppers": {
       "stepper": {
-        "addr": 11
-      }
-    },
-
-    "knobs": {
-      "k1": {
-        "msb": 13,
-        "lsb": 12
-      },
-      "k2": {
-        "msb": 15,
-        "lsb": 14
-      },
-      "k3": {
-        "msb": 17,
-        "lsb": 16
-      },
-      "k4": {
-        "msb": 19,
-        "lsb": 18
-      },
-      "k5": {
-        "msb": 21,
-        "lsb": 20
-      },
-      "k6": {
-        "msb": 23,
-        "lsb": 22
-      },
-      "k7": {
-        "msb": 25,
-        "lsb": 24
-      },
-      "k8": {
-        "msb": 27,
-        "lsb": 26
-      },
-
-      "micInGain": {
-        "msb": 37,
-        "lsb": 36
-      },
-      "headphoneVolume": {
-        "msb": 39,
-        "lsb": 38
-      },
-      "masterVolume": {
-        "msb": 41,
-        "lsb": 40
-      }
-    },
-
-    "touchStrips": {
-      "touchStrip1": {
-        "timeLsb": 28,
-        "timeMsb": 29,
-        "dataLsb": 30,
-        "dataMsb": 31
-      },
-      "touchStrip2": {
-        "timeLsb": 28,
-        "timeMsb": 29,
-        "dataLsb": 32,
-        "dataMsb": 33
+        "addr": 5
       }
     }
+
   },
 
   "input2": {
