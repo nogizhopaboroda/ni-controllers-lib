@@ -700,14 +700,5 @@
         "bAddr": 78
       }
     }
-  },
-
-  "displays": {
-    "interface": 0,
-    "endpoint": "0x08",
-
-    "numDisplays": 1,
-    "eachWidth": 480,
-    "eachHeight": 272
   }
 }
