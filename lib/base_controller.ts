@@ -75,7 +75,7 @@ function normInt(val: string | number) {
 }
 
 export class BaseController extends EventEmitter {
-  readonly buttons: Record<string, Button | PacketizedPads> = {};
+  readonly buttons: Record<string, Button | PacketizedPads | Pads> = {};
   readonly knobs: Record<string, unknown> = {};
   readonly sliders: Record<string, Slider> = {};
   readonly touchStrips: Record<string, TouchStrip> = {};
