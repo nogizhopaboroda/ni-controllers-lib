@@ -700,5 +700,15 @@
         "bAddr": 78
       }
     }
+  },
+
+  "screens": {
+    "length": 265,
+    "screen": {
+      "leftScreen": {
+        "firstByte": "0xe0",
+        "sequences": 4
+      }
+    }
   }
 }

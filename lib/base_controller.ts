@@ -11,6 +11,7 @@ import { StepWheel, StepWheelConfig } from "./components/input/stepwheel";
 import { TouchStrip, TouchStripConfig } from "./components/input/touch_strip";
 import { Widget } from "./components/input/Widget";
 import { LCDDigit, LcdDigitConfig } from "./components/output/lcd_digit";
+import { Screen, ScreenConfig } from "./components/output/screen";
 import { LED, LedConfig } from "./components/output/led";
 import {
   LED_Indexed,
@@ -83,6 +84,7 @@ export class BaseController extends EventEmitter {
   readonly rgb_leds: Record<string, LED_RGB> = {};
   readonly indexed_leds: Record<string, LED_Indexed> = {};
   readonly lcd: Record<string, LCDDigit> = {};
+  readonly screens: Record<string, Screen> = {};
 
   stepper: StepWheel | null = null;
 
@@ -163,6 +165,19 @@ export class BaseController extends EventEmitter {
           } catch (e) {
             console.log(`could not preocess display block`, e);
           }
+        }
+      }
+
+      if (key === "screens") {
+        let screensConfig = this.config[key];
+        if (screensConfig != null) {
+          this.processOutputBlock(
+            key,
+            screensConfig,
+            this.config.ledBrightestValue,
+            this.config.indexed_led_mapping,
+            hidDevice
+          );
         }
       }
     }
@@ -281,7 +296,7 @@ export class BaseController extends EventEmitter {
         if (!oinfo.dirty) {
           oinfo.dirty = true;
           if (!oinfo.activeWrite) {
-            Promise.resolve().then(() => {
+            return Promise.resolve().then(() => {
               oinfo.sendOutput().catch((ex) => {
                 console.log(`failed write of ${name}`, ex);
                 console.log(`outPacket was: ${outPacket.join("   ")}`);
@@ -344,6 +359,16 @@ export class BaseController extends EventEmitter {
       for (let key in oconf.lcd) {
         this.lcd[key] = new LCDDigit(
           oconf.lcd[key],
+          outPacket,
+          oinfo.invalidateOutput
+        );
+      }
+    }
+
+    if (oconf.screen != null) {
+      for (let key in oconf.screen) {
+        this.screens[key] = new Screen(
+          oconf.screen[key],
           outPacket,
           oinfo.invalidateOutput
         );
