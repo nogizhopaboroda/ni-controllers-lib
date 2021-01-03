@@ -703,12 +703,12 @@
   },
 
   "screens": {
-    "length": 265,
-    "screen": {
-      "leftScreen": {
-        "firstByte": "0xe0",
-        "sequences": 4
-      }
+    "mainScreen": {
+      "length": 265,
+      "firstByte": "0xe0",
+      "sequences": 4,
+      "width": 128,
+      "height": 64
     }
   }
 }

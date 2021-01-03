@@ -1,6 +1,6 @@
 import { MaschineMk2Mikro } from "../../lib/maschine_mk2_mikro";
 
-export const runDemo = (mk2mikro: MaschineMk2Mikro) =>
+export const runDemo = (mk2mikro: MaschineMk2Mikro, screenData) =>
   mk2mikro.init().then(() => {
     // ## Group Pads: Display colors with transient "flash" on press.
 
@@ -32,6 +32,9 @@ export const runDemo = (mk2mikro: MaschineMk2Mikro) =>
     mk2mikro.on(`stepper:step`, ({ direction }) => {
       console.log(`stepper: ${direction < 0 ? "decrement" : "increment"}`);
     });
+
+    mk2mikro.screens.mainScreen.clearScreen();
+    mk2mikro.screens.mainScreen.paintScreen(screenData);
 
     console.log("init completing, stuff should theoretically happen now.");
   });

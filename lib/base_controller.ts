@@ -171,13 +171,7 @@ export class BaseController extends EventEmitter {
       if (key === "screens") {
         let screensConfig = this.config[key];
         if (screensConfig != null) {
-          this.processOutputBlock(
-            key,
-            screensConfig,
-            this.config.ledBrightestValue,
-            this.config.indexed_led_mapping,
-            hidDevice
-          );
+          this.processScreenBlock(screensConfig, hidDevice);
         }
       }
     }
@@ -364,15 +358,16 @@ export class BaseController extends EventEmitter {
         );
       }
     }
+  }
 
-    if (oconf.screen != null) {
-      for (let key in oconf.screen) {
-        this.screens[key] = new Screen(
-          oconf.screen[key],
-          outPacket,
-          oinfo.invalidateOutput
-        );
+  async processScreenBlock(config: OutputConf, hidDevice: HidAdapter) {
+    const sendScreenData = async (packets) => {
+      for (let packet of packets) {
+        await hidDevice.write(Array.from(packet));
       }
+    };
+    for (let key in config) {
+      this.screens[key] = new Screen(config[key], sendScreenData);
     }
   }
 
