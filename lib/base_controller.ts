@@ -11,7 +11,10 @@ import { StepWheel, StepWheelConfig } from "./components/input/stepwheel";
 import { TouchStrip, TouchStripConfig } from "./components/input/touch_strip";
 import { Widget } from "./components/input/Widget";
 import { LCDDigit, LcdDigitConfig } from "./components/output/lcd_digit";
-import { OLEDDisplay, OLEDDisplayConfig } from "./components/output/oled_display";
+import {
+  OLEDDisplay,
+  OLEDDisplayConfig,
+} from "./components/output/oled_display";
 import { LED, LedConfig } from "./components/output/led";
 import {
   LED_Indexed,
@@ -49,6 +52,8 @@ interface OutputConf {
   indexed_leds?: Record<string, LedIndexedConfig>;
   lcd?: Record<string, LcdDigitConfig>;
 }
+
+interface OLEDDisplaysConfig extends Record<string, OLEDDisplayConfig> {}
 
 interface OutputInfo {
   dirty: boolean;
@@ -113,6 +118,7 @@ export class BaseController extends EventEmitter {
       output: OutputConf;
       output2?: OutputConf;
       displays?: LcdDisplaysConfig;
+      oled_displays?: OLEDDisplaysConfig;
     },
     readonly createHid: HidAdapterFactory,
     readonly createUsb: UsbAdapterFactory
@@ -169,9 +175,9 @@ export class BaseController extends EventEmitter {
       }
 
       if (key === "oled_displays") {
-        let screensConfig = this.config[key];
-        if (screensConfig != null) {
-          this.processScreenBlock(screensConfig, hidDevice);
+        let oledDisplaysConfig = this.config[key];
+        if (oledDisplaysConfig != null) {
+          this.processOledDisplaysBlock(oledDisplaysConfig, hidDevice);
         }
       }
     }
@@ -360,8 +366,11 @@ export class BaseController extends EventEmitter {
     }
   }
 
-  async processScreenBlock(config: OutputConf, hidDevice: HidAdapter) {
-    const sendScreenData = async (packets) => {
+  async processOledDisplaysBlock(
+    config: OLEDDisplaysConfig,
+    hidDevice: HidAdapter
+  ) {
+    const sendScreenData = async (packets: Uint8Array[]) => {
       for (let packet of packets) {
         await hidDevice.write(Array.from(packet));
       }

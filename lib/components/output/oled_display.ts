@@ -17,7 +17,7 @@ export class OLEDDisplay {
     return [this.config.firstByte, 0, 0, packetIndex * 2, 0, 128, 0, 2, 0];
   }
 
-  paintScreen(data: number[] = []){
+  paintScreen(data: number[] = []) {
     const imageDataLength = this.imageDataLength;
     const length = this.config.length;
     const packets = [];
