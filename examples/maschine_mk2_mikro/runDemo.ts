@@ -33,8 +33,8 @@ export const runDemo = (mk2mikro: MaschineMk2Mikro, screenData) =>
       console.log(`stepper: ${direction < 0 ? "decrement" : "increment"}`);
     });
 
-    mk2mikro.screens.mainScreen.clearScreen();
-    mk2mikro.screens.mainScreen.paintScreen(screenData);
+    mk2mikro.oled_displays.mainScreen.clearScreen();
+    mk2mikro.oled_displays.mainScreen.paintScreen(screenData);
 
     console.log("init completing, stuff should theoretically happen now.");
   });
