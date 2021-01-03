@@ -35,6 +35,12 @@ knowledge and brute force experimentation.
 - 1 LCD Display
 - Ridiculously honking big.
 
+### Mashine Mk2 Mikro
+
+- Indexed color pads (4x4).
+- Monochromatic LEDs with a range of 0-63
+- OLED Display
+
 ### Mashine Mk3
 
 - Indexed color pads (4x4) and group buttons (4x2). Massively more limited
