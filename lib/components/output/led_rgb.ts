@@ -1,22 +1,22 @@
 import tinycolor from "tinycolor2";
 
 const colorTable = [
-  "red",
-  "orangered",
-  "darkorange",
-  "yellow", // in hue space this would just be yellow
-  "lime", // in hue space this would be lime
-  "green", // in hue space this would be green
-  "springgreen", // in hue space this would be mint
-  "aquamarine", // in hue space this would be a greenish-cyan
-  "cyan",
-  "turquoise",
-  "blue",
-  "plum",
-  "violet",
-  "purple",
-  "magenta",
-  "fuchsia",
+  "#fe0000",
+  "#fe1800",
+  "#fe6000",
+  "#fe9400", // in hue space this would just be yellow
+  "#fedc00", // in hue space this would be lime
+  "#4cfe00", // in hue space this would be green
+  "#00fe00", // in hue space this would be mint
+  "#00fe40", // in hue space this would be a greenish-cyan
+  "#00fef0",
+  "#0078fe",
+  "#0000fe",
+  "#4c00fe",
+  "#ac00fe",
+  "#fe007c",
+  "#fe003c",
+  "#fe0014",
 ];
 
 export interface LedRgbConfig {
