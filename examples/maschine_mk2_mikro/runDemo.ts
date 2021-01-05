@@ -1,18 +1,17 @@
+import jpeg, { BufferLike } from "jpeg-js";
 import { MaschineMk2Mikro } from "../../lib/maschine_mk2_mikro";
 
-export const runDemo = (mk2mikro: MaschineMk2Mikro, screenData) =>
+export const runDemo = (mk2mikro: MaschineMk2Mikro, jpegData: BufferLike) =>
   mk2mikro.init().then(() => {
-    // ## Group Pads: Display colors with transient "flash" on press.
-
-    mk2mikro.on('p:pressed', (index, pressure) => {
+    mk2mikro.on("p:pressed", (index, pressure) => {
       console.log(`pad #${index} pressed. pressure: ${pressure}`);
     });
 
-    mk2mikro.on('p:pressure', (index, pressure) => {
+    mk2mikro.on("p:pressure", (index, pressure) => {
       // console.log(`pad #${index} pressure: ${pressure}`);
     });
 
-    mk2mikro.on('p:released', (index) => {
+    mk2mikro.on("p:released", (index) => {
       console.log(`pad #${index} released`);
     });
 
@@ -34,7 +33,12 @@ export const runDemo = (mk2mikro: MaschineMk2Mikro, screenData) =>
     });
 
     mk2mikro.oled_displays.mainScreen.clearScreen();
-    mk2mikro.oled_displays.mainScreen.paintScreen(screenData);
+
+    const data = jpeg.decode(jpegData, {
+      useTArray: true,
+    });
+
+    mk2mikro.oled_displays.mainScreen.drawImage(data, true);
 
     console.log("init completing, stuff should theoretically happen now.");
   });
