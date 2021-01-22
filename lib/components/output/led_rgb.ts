@@ -4,11 +4,11 @@ const colorTable = [
   "#fe0000",
   "#fe1800",
   "#fe6000",
-  "#fe9400", // in hue space this would just be yellow
-  "#fedc00", // in hue space this would be lime
-  "#4cfe00", // in hue space this would be green
-  "#00fe00", // in hue space this would be mint
-  "#00fe40", // in hue space this would be a greenish-cyan
+  "#fe9400",
+  "#fedc00",
+  "#4cfe00",
+  "#00fe00",
+  "#00fe40",
   "#00fef0",
   "#0078fe",
   "#0000fe",
@@ -58,20 +58,23 @@ export class LED_RGB {
     this.updateOutputPacket();
   }
 
-
-  setWhiteBrightness(f: number) {
+  setWhiteBrightness(brightness: number = 0) {
     const color = tinycolor({ r: this.r, g: this.g, b: this.b });
-    const { r, g, b } = color.brighten(f).toRgb();
+    const { r, g, b } = color.brighten(brightness).toRgb();
     this.setRGB(r, g, b);
   }
 
-  setColorByNumberHelper(color16: number){
-    this.setColorHelper(colorTable[color16]);
+  setColorByNumberHelper(color16: number, ...args: any[]) {
+    this.setColorHelper(colorTable[color16], ...args);
   }
 
-  setColorHelper(colorString: string){
+  /*
+   * @param brightness The amount to brighten by. The valid range is 0 to 100.
+   * Due to tinycolor api, dividing it by 100
+   * */
+  setColorHelper(colorString: string, brightness: number = 0) {
     const color = tinycolor(colorString);
-    const { r, g, b } = color.toRgb();
+    const { r, g, b } = color.brighten(brightness / 100).toRgb();
     this.setRGB(r, g, b);
   }
 }

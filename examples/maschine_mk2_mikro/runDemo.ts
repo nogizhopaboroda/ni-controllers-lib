@@ -23,8 +23,7 @@ export const runDemo = (mk2mikro: MaschineMk2Mikro, jpegData: BufferLike) =>
       const led = mk2mikro.rgb_leds[name];
       led.setColorByNumberHelper(li0);
       mk2mikro.on(`${name}:pressure`, (pressure) => {
-        led.setColorByNumberHelper(li0);
-        led.setWhiteBrightness(Math.round(pressure / 100));
+        led.setColorByNumberHelper(li0, Math.round(pressure));
       });
     }
 
