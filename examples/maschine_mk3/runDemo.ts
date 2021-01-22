@@ -14,24 +14,8 @@ export const runDemo = (mk3: MaschineMk3, jpegData: BufferLike) =>
       console.log(`pad #${index} pressure: ${pressure}`);
     });
 
-    mk3.on('p:pressed', (index) => {
+    mk3.on('p:released', (index) => {
       console.log(`pad #${index} released`);
-    });
-
-    mk3.on('navUp:pressed', (index) => {
-      console.log(`navUp pressed`);
-    });
-
-    mk3.on('navDown:pressed', (index) => {
-      console.log(`navDown pressed`);
-    });
-
-    mk3.on('navLeft:pressed', (index) => {
-      console.log(`navLeft pressed`);
-    });
-
-    mk3.on('navRight:pressed', (index) => {
-      console.log(`navRight pressed`);
     });
 
     for (let i = 1; i <= 8; i++) {
