@@ -3,7 +3,7 @@
   "productId": 4608,
   "name": "Maschine mk2 mikro",
 
-  "ledBrightestValue": 63,
+  "ledBrightestValue": 127,
 
   "indexed_led_mapping_source": "Taken from the amazing MIT licensed CABL Macshine Jam helper logic: https://github.com/shaduzlabs/cabl/blob/master/src/devices/ni/MaschineJamHelper.cpp",
   "indexed_led_mapping": [
@@ -610,15 +610,7 @@
         "rAddr": 9,
         "gAddr": 10,
         "bAddr": 11
-      }
-    }
-  },
-
-  "output2": {
-    "length": 81,
-    "firstByte": "0x80",
-    "endpoint": "0x01",
-    "rgb_leds": {
+      },
       "p1": {
         "rAddr": 31,
         "gAddr": 32,
