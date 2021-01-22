@@ -169,7 +169,7 @@ export class BaseController extends EventEmitter {
           try {
             await this.processDisplayBlock(usbDevice, displaysConfig);
           } catch (e) {
-            console.log(`could not preocess display block`, e);
+            console.log(`could not process display block`, e);
           }
         }
       }
